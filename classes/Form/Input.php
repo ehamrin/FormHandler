@@ -2,33 +2,24 @@
 
 namespace Form;
 
-class Input{
-	public $type;
-	public $name;
-	public $hashed_name;
-	public $prompt = "";
-	public $placeholder = "";
-	public $value = "";
-	public $class = array();
+include 'FormControl.php';
 
-	public $validator = array();
-	public $required = false;
+class Input extends FormControl{
+
+	public $type;
+	public $placeholder = "";
 	public $maxLength = false;
 	public $minLength = false;
 	public $range = array();
 
-	
-	private $formName = "";
-
 	public function __construct($type, $name){
+		parent::__construct($name);
 
 		if(!InputType::HasSupport($type)){
 			throw new \Exception("Form/Input::Constructor() - The input type is not supported");
 		}
 
 		$this->type = $type;
-		$this->name = $name;
-
 	}
 
 	public function isValid($errorMessage = false){
@@ -78,17 +69,6 @@ class Input{
 		return !$has_error;
 	}
 
-	public function Sanitize($ignored = array()){
-		foreach($ignored as $name){
-			if($name == $this->name){
-				return;
-			}
-		}
-
-		$this->value = htmlentities($this->value);
-
-	}
-	
 
 	/*****************************
 	 *
@@ -151,24 +131,6 @@ HTML;
 		return $this;
 	}
 
-	public function setValue($string){
-		$this->value = $string;
-
-		return $this;
-	}
-
-	public function setClass($string){
-		$this->class[] = $string;
-
-		return $this;
-	}
-
-	public function setRequired($bool){
-		$this->required = $bool;
-
-		return $this;
-	}
-
 	public function setMaxLength($number){
 		$this->maxLength = $number;
 
@@ -186,22 +148,5 @@ HTML;
 		$this->range['max'] = $max;
 
 		return $this;
-	}
-
-	public function setPrompt($string){
-		$this->prompt = $string;
-
-		return $this;
-	}
-
-	public function setValidator($regex){
-		$this->validator[] = $regex;
-
-		return $this;
-	}
-
-	public function setFormName($string){
-		$this->formName = $string;
-		$this->hashed_name = sha1($this->formName . '_' . $this->name);
 	}
 }

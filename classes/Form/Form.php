@@ -9,7 +9,8 @@ include 'Input.php';
 include 'Validator.php';
 include 'InputType.php';
 
-class Controller{
+
+class Form{
 	
 	private $formName;
 	private $method;

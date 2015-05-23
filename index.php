@@ -1,9 +1,9 @@
 <?php 
-include 'classes/Form/Controller.php';
+include 'classes/Form/Form.php';
 
 
 
-$form = (new Form\Controller("MyForm", Form\Method::POST))
+$form = (new Form\Form("MyForm", Form\Method::POST))
 		->AddInput((new Form\Input(Form\InputType::Text, "name"))
 			->setPlaceholder("Firstname Lastname")
 			->setPrompt("Full name")
