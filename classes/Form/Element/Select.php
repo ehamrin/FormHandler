@@ -43,9 +43,9 @@ class Select extends ElementBase{
         }
 
         return <<<HTML
-		<div class="form-group">
+		<div class="form-group form-select">
             {$this->getLabelHTML()}
-			<select id="{$this->hashed_name}" class="{$this->getClassString()}" name="{$this->hashed_name}" >
+			<select id="{$this->hashed_name}" class="{$this->getClassString()}" name="{$this->formName}[{$this->hashed_name}]" >
                 {$options}
 			</select>
 			{$this->getRequiredHTML()}
