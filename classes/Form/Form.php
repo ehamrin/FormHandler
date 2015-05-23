@@ -16,6 +16,7 @@ class Form{
 	private $method;
 	private $inputHTML;
 	private $validation;
+	private $saveText = "Save";
 	private $inputRepository = array();
 	
 	const SavePadding = "Save_";
@@ -31,7 +32,7 @@ class Form{
 		return <<<HTML
 		<form method="{$this->method}">
 			{$this->inputHTML}
-			<button name="{$this->getSaveButtonName()}" value="1">Save</button>
+			<button name="{$this->getSaveButtonName()}" value="1">{$this->saveText}</button>
 		</form>
 HTML;
 	}
@@ -54,7 +55,12 @@ HTML;
 	private function getSaveButtonName(){
 		return sha1(self::SavePadding . $this->formName);
 	}
-	
+
+	public function setButtonText($string){
+		$this->saveText = $string;
+		return $this;
+	}
+
 	public function AddInput(Input $input){
 
 		$this->inputRepository[$input->name] = $input;

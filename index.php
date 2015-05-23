@@ -4,6 +4,7 @@ include 'classes/Form/Form.php';
 
 
 $form = (new Form\Form("MyForm", Form\Method::POST))
+	->setButtonText("Create")
 	->AddInput((new Form\Input(Form\InputType::Text, "name"))
 		->setPlaceholder("Firstname Lastname")
 		->setPrompt("Full name")
