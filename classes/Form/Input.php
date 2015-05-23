@@ -48,11 +48,15 @@ class Input extends FormControl{
 				$messages[] = "Must be longer than " . $this->minLength . " characters";
 			}
 
-			if(	count($this->range) &&
-				($this->value < $this->range["min"] || $this->value > $this->range["max"]) &&
-				(preg_match(Validator::INT, $this->value) xor preg_match(Validator::FLOAT, $this->value))
-			){
-				$messages[] = "Must be between " . $this->range["min"] . " and " . $this->range["max"];
+
+
+			if(	count($this->range)){
+
+				if(($this->value < $this->range["min"] || $this->value > $this->range["max"]) &&
+				(!preg_match(Validator::INT, $this->value) || !preg_match(Validator::FLOAT, $this->value))
+				){
+					$messages[] = "Must be between " . $this->range["min"] . " and " . $this->range["max"];
+				}
 			}
 		}
 
