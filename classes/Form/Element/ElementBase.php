@@ -17,7 +17,7 @@ abstract class ElementBase {
     public $value = "";
     public $validator = array();
     public $class = array();
-    private $formName = "";
+    protected $formName = "";
     public $required = false;
     public $showRequired = true;
 
