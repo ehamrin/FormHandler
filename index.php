@@ -49,6 +49,17 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->setPrompt("Password")
 		->setMinLength(6)
 		->setMaxLength(15)
+	)
+	->AddInput((new Form\Element\Select("category", array(
+			"Option 1",
+			"Option 2",
+			"Option 3",
+			"Option 4",
+		)))
+		->setPrompt("Category")
+		->setPlaceholder("Choose Category")
+		->setOptionPadding(1)
+		->addOption("Added after contructor")
 	);
 
 if($form->wasSubmitted() && $form->isValid()){

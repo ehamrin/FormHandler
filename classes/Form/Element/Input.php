@@ -2,8 +2,6 @@
 
 namespace Form\Element;
 
-include 'ElementBase.php';
-
 class Input extends ElementBase{
 
 	public $type;
@@ -81,42 +79,16 @@ class Input extends ElementBase{
 	 ****************************/
 	public function getHTML($data)
 	{
-
-		$error = "";
-
 		//Was the data posted?
 		if (isset($data[$this->hashed_name])) {
 			$this->value = $data[$this->hashed_name];
-
-			//Check validation
-			$result = $this->isValid(true);
-
-			//Loop through error messages
-			if (is_array($result)){
-				$error .= '<ul class="form-group-error">';
-
-				foreach($result as $inputError){
-					$error .= '<li>' . $inputError . '</li>';
-				}
-
-				$error .= '</ul>';
-			}
 		}
-
-		//Prepare class names
-		$class = implode(' ', $this->class);
-
-		//Set required
-		$required = $this->required && $this->showRequired ? '<span class="required">*</span>' : '';
-
-		//Prepare label
-		$label = ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . ':</label>' : '';
 
 		return <<<HTML
 		<div class="form-group">
-			{$label}
-			<input id="{$this->hashed_name}" class="{$class}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->hashed_name}"  value="{$this->value}"/>{$required}
-			{$error}
+			{$this->getLabelHTML()}
+			<input id="{$this->hashed_name}" class="{$this->getClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->hashed_name}"  value="{$this->value}"/>{$this->getRequiredHTML()}
+			{$this->getErrorMessageHTML($data)}
 		</div>
 HTML;
 	}

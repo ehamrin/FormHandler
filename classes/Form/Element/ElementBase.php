@@ -25,13 +25,27 @@ abstract class ElementBase {
         $this->name = $name;
     }
 
+    public function isValid($errorMessage = false){
+
+        if($errorMessage && $this->required && empty($this->value)){
+            return array("This element is required");
+        }
+
+        return !($this->required && empty($this->value));
+    }
+
     public function Sanitize($ignored = array()){
+
+        if(property_exists($this, "type") && $this->type == InputType::Password){
+            return;
+        }
+
         foreach($ignored as $name){
             if($name == $this->name){
                 return;
             }
         }
-        $this->value = htmlentities($this->value);
+        $this->value = htmlentities(trim($this->value));
     }
 
 
@@ -69,5 +83,45 @@ abstract class ElementBase {
         $this->validator[] = $regex;
 
         return $this;
+    }
+
+    public function getHTML($data){
+        return "";
+    }
+
+    public function getClassString(){
+        return implode(' ', $this->class);
+    }
+
+    public function getRequiredHTML(){
+        return $this->required && $this->showRequired ? '<span class="required">*</span>' : '';
+
+    }
+
+    public function getLabelHTML(){
+        return ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . ':</label>' : '';
+    }
+
+    public function getErrorMessageHTML($data){
+
+        $ret = "";
+        if (isset($data[$this->hashed_name])) {
+            //Check validation
+            $result = $this->isValid(true);
+
+            //Loop through error messages
+            if (is_array($result)) {
+                $ret .= '<ul class="form-group-error">';
+
+                foreach ($result as $inputError) {
+                    $ret .= '<li>' . $inputError . '</li>';
+                }
+
+                $ret .= '</ul>';
+                return $ret;
+            }
+        }
+        return null;
+
     }
 }

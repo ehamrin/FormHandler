@@ -6,8 +6,10 @@ namespace Form;
 
 include 'Method.php';
 include 'Validator.php';
+include 'Element/ElementBase.php';
 include 'Element/Input.php';
 include 'Element/InputType.php';
+include 'Element/Select.php';
 
 
 class Form{
@@ -85,7 +87,7 @@ HTML;
 		return $this;
 	}
 
-	public function AddInput(Element\Input $input){
+	public function AddInput(Element\ElementBase $input){
 
 		$this->inputRepository[$input->name] = $input;
 
@@ -95,6 +97,7 @@ HTML;
 
 		return $this;
 	}
+
 
 	public function AddCustomHTML($html){
 
@@ -119,7 +122,7 @@ HTML;
 
 			if($input->isValid()){
 
-				if($sanitize && $input->type != Element\InputType::Password){
+				if($sanitize){
 					$input->Sanitize($ignored);
 				}
 				$object->{$input->name} = $input->value;
