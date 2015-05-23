@@ -53,6 +53,7 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 
 if($form->wasSubmitted() && $form->isValid()){
 
+	echo 'Returned as object and sanitized (except for password)';
 	echo '<pre>';
 	var_dump($form->GetDataAsObject());
 	echo '</pre>';

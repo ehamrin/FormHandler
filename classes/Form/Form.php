@@ -119,7 +119,7 @@ HTML;
 
 			if($input->isValid()){
 
-				if($sanitize && $input->type != InputType::Password){
+				if($sanitize && $input->type != Element\InputType::Password){
 					$input->Sanitize($ignored);
 				}
 				$object->{$input->name} = $input->value;
