@@ -1,6 +1,6 @@
 <?php
 
-namespace Form;
+namespace Form\Element;
 
 class InputType{
 	const Text = "text";

@@ -5,9 +5,9 @@ namespace Form;
 
 
 include 'Method.php';
-include 'Input.php';
 include 'Validator.php';
-include 'InputType.php';
+include 'Element/Input.php';
+include 'Element/InputType.php';
 
 
 class Form{
@@ -85,7 +85,7 @@ HTML;
 		return $this;
 	}
 
-	public function AddInput(Input $input){
+	public function AddInput(Element\Input $input){
 
 		$this->inputRepository[$input->name] = $input;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Form;
+namespace Form\Element;
 
-include 'FormControl.php';
+include 'ElementBase.php';
 
-class Input extends FormControl{
+class Input extends ElementBase{
 
 	public $type;
 	public $placeholder = "";
@@ -53,7 +53,7 @@ class Input extends FormControl{
 			if(	count($this->range)){
 
 				if(($this->value < $this->range["min"] || $this->value > $this->range["max"]) &&
-				(!preg_match(Validator::INT, $this->value) || !preg_match(Validator::FLOAT, $this->value))
+				(!preg_match(\Form\Validator::INT, $this->value) || !preg_match(\Form\Validator::FLOAT, $this->value))
 				){
 					$messages[] = "Must be between " . $this->range["min"] . " and " . $this->range["max"];
 				}

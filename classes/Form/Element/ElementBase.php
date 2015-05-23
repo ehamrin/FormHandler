@@ -6,10 +6,10 @@
  * Time: 9:54 AM
  */
 
-namespace Form;
+namespace Form\Element;
 
 
-abstract class FormControl {
+abstract class ElementBase {
 
     public $name;
     public $hashed_name;
