@@ -107,7 +107,7 @@ class Input extends FormControl{
 		$class = implode(' ', $this->class);
 
 		//Set required
-		$required = $this->required ? '<span class="required">*</span>' : '';
+		$required = $this->required && $this->showRequired ? '<span class="required">*</span>' : '';
 
 		//Prepare label
 		$label = ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . ':</label>' : '';

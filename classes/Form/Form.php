@@ -14,8 +14,7 @@ class Form{
 	
 	private $formName;
 	private $method;
-	private $inputHTML;
-	private $validation;
+	private $inputHTML = "";
 	private $saveText = "Save";
 	private $successText = "";
 	private $errorText = "";
@@ -26,8 +25,6 @@ class Form{
 	public function __construct($name, $method){
 		$this->formName = $name;
 		$this->method = $method;
-		$this->inputHTML = "";
-		$this->validation = true;
 	}
 	
 	public function GenerateOutput(){
@@ -46,7 +43,7 @@ class Form{
 		}
 
 		return <<<HTML
-		<form method="{$this->method}">
+		<form method="{$this->method}" id="{$this->formName}">
 			{$message}
 			{$this->inputHTML}
 			<button name="{$this->getSaveButtonName()}" value="1">{$this->saveText}</button>

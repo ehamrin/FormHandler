@@ -19,6 +19,7 @@ abstract class FormControl {
     public $class = array();
     private $formName = "";
     public $required = false;
+    public $showRequired = true;
 
     public function __construct($name){
         $this->name = $name;
@@ -46,8 +47,9 @@ abstract class FormControl {
         return $this;
     }
 
-    public function setRequired($bool){
+    public function setRequired($bool = true, $hide = false){
         $this->required = $bool;
+        $this->showRequired = !$hide;
 
         return $this;
     }
