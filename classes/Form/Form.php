@@ -66,6 +66,13 @@ HTML;
 		return $this;
 	}
 
+	public function AddCustomHTML($html){
+
+		$this->inputHTML .= $html;
+
+		return $this;
+	}
+
 	public function isValid(){
 		foreach ($this->inputRepository as $input){
 			if(!$input->isValid()){
