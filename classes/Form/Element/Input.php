@@ -49,9 +49,10 @@ class Input extends ElementBase{
 
 
 			if(	count($this->range)){
+				$this->value = intval($this->value);
 
-				if(($this->value < $this->range["min"] || $this->value > $this->range["max"]) &&
-				(!preg_match(\Form\Validator::INT, $this->value) || !preg_match(\Form\Validator::FLOAT, $this->value))
+				if((!preg_match(\Form\Validator::INT, $this->value) || !preg_match(\Form\Validator::FLOAT, $this->value)) &&
+				($this->value < $this->range["min"] || $this->value > $this->range["max"])
 				){
 					$messages[] = "Must be between " . $this->range["min"] . " and " . $this->range["max"];
 				}
@@ -87,7 +88,7 @@ class Input extends ElementBase{
 		return <<<HTML
 		<div class="form-group">
 			{$this->getLabelHTML()}
-			<input id="{$this->hashed_name}" class="{$this->getClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->hashed_name}"  value="{$this->value}"/>{$this->getRequiredHTML()}
+			<input id="{$this->hashed_name}" class="{$this->getClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->getRequiredHTML()}
 			{$this->getErrorMessageHTML($data)}
 		</div>
 HTML;
