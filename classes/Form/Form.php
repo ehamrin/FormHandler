@@ -22,7 +22,7 @@ class Form{
 	private $errorText = "";
 	private $inputRepository = array();
 	
-	const SavePadding = "Save_";
+	const SavePadding = "Save_Button";
 	
 	public function __construct($name, $method){
 		$this->formName = $name;
@@ -54,10 +54,10 @@ HTML;
 	}
 	
 	private function getMethodArray(){
-		if($this->method == Method::POST){
-			return $_POST;
-		}else if($this->method == Method::GET){
-			return $_GET;
+		if($this->method == Method::POST && isset($_POST[$this->formName])){
+			return $_POST[$this->formName];
+		}else if($this->method == Method::GET && isset($_GET[$this->formName])){
+			return $_GET[$this->formName];
 		}else{
 			return array();
 		}
@@ -65,11 +65,11 @@ HTML;
 	
 	public function wasSubmitted(){
 		$data = $this->getMethodArray();
-		return isset($data[$this->getSaveButtonName()]);
+		return isset($data[self::SavePadding]);
 	}
 	
 	private function getSaveButtonName(){
-		return sha1(self::SavePadding . $this->formName);
+		return $this->formName . '[' . self::SavePadding . ']';
 	}
 
 	public function setButtonText($string){
@@ -142,4 +142,5 @@ HTML;
 
 		return $object;
 	}
+
 }
