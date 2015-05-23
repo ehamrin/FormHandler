@@ -17,10 +17,9 @@ $form = (new Form\Controller("MyForm", Form\Method::POST))
 		)
 		->AddInput((new Form\Input(Form\InputType::Text, "int"))
 			->setPlaceholder("1234")
-			->setPrompt("Int")
+			->setPrompt("Int (range, numeric)")
 			->setRequired(true)
 			->setRange(10,500)
-			->setValidator(Form\Validator::INT)
 		)
 		->AddInput((new Form\Input(Form\InputType::Text, "float"))
 			->setPlaceholder("12.59")
@@ -47,11 +46,9 @@ $form = (new Form\Controller("MyForm", Form\Method::POST))
 		);
 
 if($form->wasSubmitted() && $form->isValid()){
-	$object = new stdClass();
 
-	$form->PopulateObject($object);
 	echo '<pre>';
-	var_dump($object);
+	var_dump($form->GetDataAsObject());
 	echo '</pre>';
 }
 

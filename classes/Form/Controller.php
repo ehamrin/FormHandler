@@ -76,25 +76,29 @@ HTML;
 	}
 
 	public function PopulateObject($object, $sanitize = true, $ignored = array()){
+
 		foreach ($this->inputRepository as $input){
+
 			if($input->isValid()){
-				$value = $input->value;
 
 				if($sanitize && $input->type != InputType::Password){
-					$doSanitize = true;
-					foreach($ignored as $name){
-						if($name == $input->name){
-							$doSanitize = false;
-						}
-					}
-					if($doSanitize){
-						$value = htmlentities($value);
-					}
+					$input->Sanitize($ignored);
 				}
-				$object->{$input->name} = $value;
+				$object->{$input->name} = $input->value;
+
 			}else{
+
 				throw new \Exception("Form/Controller::PopulateObject() - An unvalid input was discovered");
+
 			}
 		}
+	}
+
+	public function GetDataAsObject($sanitize = true, $ignored = array()){
+		$object = new \stdClass();
+
+		$this->PopulateObject($object, $sanitize, $ignored);
+
+		return $object;
 	}
 }

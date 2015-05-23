@@ -21,8 +21,14 @@ class Input{
 	private $formName = "";
 
 	public function __construct($type, $name){
+
+		if(!InputType::HasSupport($type)){
+			throw new \Exception("Form/Input::Constructor() - The input type is not supported");
+		}
+
 		$this->type = $type;
 		$this->name = $name;
+
 	}
 
 	public function isValid($errorMessage = false){
@@ -30,7 +36,7 @@ class Input{
 
 		if($this->required && empty($this->value)){
 
-			$messages[1] = "Field cannot be empty";
+			$messages[] = "Field cannot be empty";
 
 		}else if(!empty($this->value)){
 
@@ -51,7 +57,10 @@ class Input{
 				$messages[] = "Must be longer than " . $this->minLength . " characters";
 			}
 
-			if(count($this->range) && ($this->value < $this->range["min"] || $this->value > $this->range["max"])){
+			if(	count($this->range) &&
+				($this->value < $this->range["min"] || $this->value > $this->range["max"]) &&
+				(preg_match(Validator::INT, $this->value) xor preg_match(Validator::FLOAT, $this->value))
+			){
 				$messages[] = "Must be between " . $this->range["min"] . " and " . $this->range["max"];
 			}
 		}
@@ -68,6 +77,17 @@ class Input{
 
 		return !$has_error;
 	}
+
+	public function Sanitize($ignored = array()){
+		foreach($ignored as $name){
+			if($name == $this->name){
+				return;
+			}
+		}
+
+		$this->value = htmlentities($this->value);
+
+	}
 	
 
 	/*****************************
@@ -80,11 +100,14 @@ class Input{
 
 		$error = "";
 
+		//Was the data posted?
 		if (isset($data[$this->hashed_name])) {
 			$this->value = $data[$this->hashed_name];
 
+			//Check validation
 			$result = $this->isValid(true);
 
+			//Loop through error messages
 			if (is_array($result)){
 				$error .= '<ul class="form-group-error">';
 
@@ -96,25 +119,24 @@ class Input{
 			}
 		}
 
+		//Prepare class names
 		$class = implode(' ', $this->class);
+
+		//Set required
 		$required = $this->required ? '<span class="required">*</span>' : '';
+
+		//Prepare label
+		$label = ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . ':</label>' : '';
 
 		return <<<HTML
 		<div class="form-group">
-			{$this->getLabel()}
+			{$label}
 			<input id="{$this->hashed_name}" class="{$class}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->hashed_name}"  value="{$this->value}"/>{$required}
 			{$error}
 		</div>
 HTML;
 	}
 
-	private function getLabel(){
-		if($this->prompt != ""){
-			return '<label for="' . $this->hashed_name . '">' . $this->prompt . ':</label>';
-		}
-
-		return null;
-	}
 
 
 	/***********************
