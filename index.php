@@ -5,6 +5,8 @@ include 'classes/Form/Form.php';
 
 $form = (new Form\Form("MyForm", Form\Method::POST))
 	->setButtonText("Create")
+	->setSuccessMessage("You successfully submitted the form")
+	->setErrorMessage("You submitted the form, but there were errors validating it")
 	->AddInput((new Form\Input(Form\InputType::Text, "name"))
 		->setPlaceholder("Firstname Lastname")
 		->setPrompt("Full name")
@@ -65,6 +67,8 @@ if($form->wasSubmitted() && $form->isValid()){
 	<title></title>
 </head>
 <body>
+	<h1>My form wrapper</h1>
+	<hr/>
 	<?php echo $form->GenerateOutput(); ?>
 </body>
 </html>

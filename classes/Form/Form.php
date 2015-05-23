@@ -17,6 +17,8 @@ class Form{
 	private $inputHTML;
 	private $validation;
 	private $saveText = "Save";
+	private $successText = "";
+	private $errorText = "";
 	private $inputRepository = array();
 	
 	const SavePadding = "Save_";
@@ -29,8 +31,23 @@ class Form{
 	}
 	
 	public function GenerateOutput(){
+		$message = null;
+
+		if($this->wasSubmitted()){
+			if($this->isValid() && !empty($this->successText)){
+
+				$message = '<p class="success">' . $this->successText . '</p>';
+
+			}else if(!$this->isValid() && !empty($this->errorText)){
+
+				$message = '<p class="error">' . $this->errorText . '</p>';
+
+			}
+		}
+
 		return <<<HTML
 		<form method="{$this->method}">
+			{$message}
 			{$this->inputHTML}
 			<button name="{$this->getSaveButtonName()}" value="1">{$this->saveText}</button>
 		</form>
@@ -58,6 +75,16 @@ HTML;
 
 	public function setButtonText($string){
 		$this->saveText = $string;
+		return $this;
+	}
+
+	public function setSuccessMessage($string){
+		$this->successText = $string;
+		return $this;
+	}
+
+	public function setErrorMessage($string){
+		$this->errorText = $string;
 		return $this;
 	}
 
