@@ -2,55 +2,53 @@
 include 'classes/Form/Form.php';
 
 $form = (new Form\Form("MyForm", Form\Method::POST))
-	->setButtonText("Create")
-	->setSuccessMessage("You successfully submitted the form")
-	->setErrorMessage("You submitted the form, but there were errors validating it")
+	->SetButtonText("Create")
+
+	->SetSuccessMessage("You successfully submitted the form")
+	->SetErrorMessage("You submitted the form, but there were errors validating.")
+
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "name"))
-		->setPlaceholder("Firstname Lastname")
-		->setPrompt("Full name")
-		->setValue("Testnamn")
+		->SetPlaceholder("Firstname Lastname")
+		->SetPrompt("Full name")
+		->SetValue("Testnamn")
 	)
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "pid"))
-		->setPlaceholder("YYMMDD-XXXX")
-		->setPrompt("Personal ID (SWE)")
-		->setRequired(true)
-		->setValidator(Form\Validator::SWEDISH_PID)
+		->SetPlaceholder("YYMMDD-XXXX")
+		->SetPrompt("Personal ID (SWE)")
+		->SetRequired(true)
+		->SetValidator(Form\Validator::SWEDISH_PID)
 	)
 
-	->AddCustomHTML("<fieldset>")
-	->AddCustomHTML("<legend>You can add custom HTML</legend>")
+	->AddCustomHTML('<div class="small">You can add you own HTML in between elements to place extra content that you want to have in you form</div>')
 
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "int"))
-		->setPlaceholder("1234")
-		->setPrompt("Int (range, numeric)")
-		->setRequired(true)
-		->setRange(10,500)
+		->SetPlaceholder("1234")
+		->SetPrompt("Int (range, numeric)")
+		->SetRequired(true)
+		->SetRange(10,500)
 	)
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "float"))
-		->setPlaceholder("12.59")
-		->setPrompt("Float")
-		->setRequired(true)
-		->setValidator(Form\Validator::FLOAT)
+		->SetPlaceholder("12.59")
+		->SetPrompt("Float")
+		->SetRequired(true)
+		->SetValidator(Form\Validator::FLOAT)
 	)
-
-	->AddCustomHTML("</fieldset>")
-
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "postal"))
-		->setPlaceholder("123 45")
-		->setPrompt("Postal Code (SWE), required but hidden asterisk")
-		->setRequired(true, true)
-		->setValidator(Form\Validator::SWEDISH_POSTAL_CODE)
+		->SetPlaceholder("123 45")
+		->SetPrompt("Postal Code (SWE), required but hidden asterisk")
+		->SetRequired(true, true)
+		->SetValidator(Form\Validator::SWEDISH_POSTAL_CODE)
 	)
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Email, "email"))
-		->setPrompt("Email")
-		->setPlaceholder("test@test.com")
-		->setRequired(true)
-		->setValidator(Form\Validator::EMAIL)
+		->SetPrompt("Email")
+		->SetPlaceholder("test@test.com")
+		->SetRequired(true)
+		->SetValidator(Form\Validator::EMAIL)
 	)
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Password, "password"))
-		->setPrompt("Password")
-		->setMinLength(6)
-		->setMaxLength(15)
+		->SetPrompt("Password")
+		->SetMinLength(6)
+		->SetMaxLength(15)
 	)
 	->AddInput((new Form\Element\Select("category", array(
 			"Option 1",
@@ -58,31 +56,35 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 			"Option 3",
 			"Option 4",
 		)))
-		->setPrompt("Category")
-		->setPlaceholder("Choose Category")
-		->setOptionPadding(1)
-		->addOption("Added after contructor")
-	)->AddInput((new Form\Element\Select("car", array(
-		"1354" => "Audi",
-		"1355" => "Volkswagen",
-		"135654" => "Fiat",
-		"13" => "BMW"
+		->SetPrompt("Category")
+		->SetPlaceholder("Choose Category")
+		->SetOptionPadding(1)
+		->AddOption("Added after contructor")
+	)
+	->AddInput((new Form\Element\Select("car", array(
+			"1354" => "Audi",
+			"1355" => "Volkswagen",
+			"135654" => "Fiat",
+			"13" => "BMW"
 		)))
-		->setPrompt("Car (loaded ID)")
-		->setPlaceholder("Choose Car")
-		->setValue(13)
-	)->AddInput((new Form\Element\Checkbox('is_human'))
-		->setPrompt("Can you check it?")
-		->setRequired(true)
-	)->AddInput((new Form\Element\RadioGroup("gender", array(
-		"m" => "Male",
-		"f" => "Female"
-	)))
-		->setRequired(true, true)
-		->setValue('m')
+		->SetPrompt("Car (loaded ID)")
+		->SetPlaceholder("Choose Car")
+		->SetValue(13)
+	)
+	->AddInput((new Form\Element\Checkbox('is_human'))
+		->SetPrompt("Can you check it?")
+		->SetRequired(true)
+	)
+	->AddInput((new Form\Element\RadioGroup("gender", array(
+			"m" => "Male",
+			"f" => "Female"
+		)))
+		->SetRequired(true, true)
+		->SetValue('m')
+		->SetPrompt(' ')
 	);
 
-if($form->wasSubmitted() && $form->isValid()){
+if($form->WasSubmitted() && $form->IsValid()){
 
 	echo 'Returned as object and sanitized (except for password)';
 	echo '<pre>';
@@ -96,7 +98,8 @@ if($form->wasSubmitted() && $form->isValid()){
 <html>
 <head lang="en">
 	<meta charset="UTF-8">
-	<title></title>
+	<title>Example form</title>
+	<link href="style.css" rel="stylesheet">
 </head>
 <body>
 	<h1>My form wrapper</h1>

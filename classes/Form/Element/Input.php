@@ -88,11 +88,12 @@ class Input extends ElementBase{
 		$errormessage = $this->GetErrorMessageHTML($data);
 
 		return <<<HTML
-		<div class="form-group">
-			{$this->GetLabelHTML()}
-			<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->GetRequiredHTML()}
-			{$errormessage}
-		</div>
+
+			<div class="form-group">
+				{$this->GetLabelHTML()}
+				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->GetRequiredHTML()}
+				{$errormessage}
+			</div>
 HTML;
 	}
 

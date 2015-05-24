@@ -1,0 +1,147 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+
+body{
+    background-color: #f7f7f7;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #ffffff;
+    color: #4a4a4a;
+    margin: 0;
+    padding: 30px 0;
+}
+
+hr{
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+form{
+    background-color: #ffffff;
+    padding: 10px 20px;
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+p.error,p.success{
+    padding: 10px;
+}
+
+.small{
+    margin-left: 150px;
+    width: 230px;
+    display: block;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.form-group{
+    position: relative;
+    margin: 10px 0;
+}
+
+.form-group label{
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    box-sizing: border-box;
+    padding-right: 10px;
+}
+
+
+.form-group .required{
+    color: #7a090c;
+}
+
+.form-group-error{
+    position: absolute;
+    top: 4px;
+    height: 15px;
+    width: 15px;
+    background: url("images/error-icon.png") no-repeat top left;
+    background-size: 15px 15px;
+    left: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.form-group-error:hover{
+    width: 200px;
+}
+
+.form-group-error li{
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+
+.form-group-error:hover li{
+    display: block;
+    margin-left: 30px;
+}
+
+input, select{
+    width: 230px;
+    box-sizing: border-box;
+    padding: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    color: #333;
+    vertical-align: top;
+}
+
+.radio-group{
+    display: inline;
+}
+
+.radio-group label{
+    width: auto;
+    display: inline;
+    text-align: left;
+}
+
+input[type="radio"],
+input[type="checkbox"]
+{
+    width: auto;
+}
+
+.error{
+    background-color: #ff9a8a;
+    color: #7a090c;
+    border: 1px solid #7a090c;
+}
+
+.success{
+    background-color: #96f794;
+    color: #3a7d2e;
+    border: 1px solid #3a7d2e;
+}
+
+button{
+    display: block;
+    width: 230px;
+    margin-left: 155px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    background-color: #66e155;
+    color: #fff;
+    border: 2px solid #66e155;
+    font-weight: 700;
+    -webkit-transition: color 0.2s, background-color 0.2s;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+button:hover{
+    background-color: #fff;
+    color: #66e155;
+}

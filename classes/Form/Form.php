@@ -47,11 +47,13 @@ class Form{
 		}
 
 		return <<<HTML
-		<form method="{$this->method}" id="{$this->formName}">
+
+	<form method="{$this->method}" id="{$this->formName}">
 			{$message}
 			{$this->inputHTML}
 			<button name="{$this->getSaveButtonName()}" value="1">{$this->saveText}</button>
-		</form>
+	</form>
+
 HTML;
 	}
 	
@@ -103,7 +105,7 @@ HTML;
 
 	public function AddCustomHTML($html){
 
-		$this->inputHTML .= $html;
+		$this->inputHTML .= PHP_EOL . $html;
 
 		return $this;
 	}

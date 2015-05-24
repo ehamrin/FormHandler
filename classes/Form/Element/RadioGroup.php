@@ -64,14 +64,15 @@ class RadioGroup extends ElementBase{
         $errormessage = $this->GetErrorMessageHTML($data);
 
         return <<<HTML
-		<div class="form-group">
-			{$this->GetLabelHTML()}
-			<div class="radio-group">
-			    {$options}
-			</div>
-			{$this->GetRequiredHTML()}
-			{$errormessage}
-		</div>
+
+            <div class="form-group">
+                {$this->GetLabelHTML()}
+                <div class="radio-group">
+                    {$options}
+                </div>
+                {$this->GetRequiredHTML()}
+                {$errormessage}
+            </div>
 HTML;
     }
 

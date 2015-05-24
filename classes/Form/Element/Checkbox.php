@@ -49,11 +49,13 @@ class Checkbox extends ElementBase{
         $errormessage = $this->GetErrorMessageHTML($data);
         $checked = $this->value == 'on' ? 'checked="checked"' : '' ;
         return <<<HTML
-		<div class="form-group">
-			{$this->GetLabelHTML()}
-			<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked/>{$this->GetRequiredHTML()}
-			{$errormessage}
-		</div>
+
+            <div class="form-group">
+                {$this->GetLabelHTML()}
+                <input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked/>{$this->GetRequiredHTML()}
+                {$errormessage}
+            </div>
+
 HTML;
     }
 

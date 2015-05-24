@@ -35,22 +35,23 @@ class Select extends ElementBase{
             $this->value = $data[$this->hashed_name];
         }
 
-        $options = $this->placeholder ? '<option value="">' . $this->placeholder . '</option>' : '';
+        $options = $this->placeholder ? '<option value="">' . $this->placeholder . '</option>' . PHP_EOL : '';
 
         foreach($this->options as $val => $option){
             $value = $this->optionPadding ? $this->optionPadding + $val : $val;
-            $options .= '<option value="' . $value . '"' . ($this->value == $value ? ' selected="selected"': '') . '>' . $option . '</option>';
+            $options .= '                   <option value="' . $value . '"' . ($this->value == $value ? ' selected="selected"': '') . '>' . $option . '</option>' . PHP_EOL;
         }
 
         return <<<HTML
-		<div class="form-group form-select">
-            {$this->GetLabelHTML()}
-			<select id="{$this->hashed_name}" class="{$this->GetClassString()}" name="{$this->formName}[{$this->hashed_name}]" >
-                {$options}
-			</select>
-			{$this->GetRequiredHTML()}
-			{$this->GetErrorMessageHTML($data)}
-		</div>
+
+            <div class="form-group form-select">
+                {$this->GetLabelHTML()}
+                <select id="{$this->hashed_name}" class="{$this->GetClassString()}" name="{$this->formName}[{$this->hashed_name}]" >
+                        {$options}
+                </select>
+                {$this->GetRequiredHTML()}
+                {$this->GetErrorMessageHTML($data)}
+            </div>
 HTML;
     }
 
