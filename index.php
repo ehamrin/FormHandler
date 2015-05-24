@@ -100,7 +100,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 </head>
 <body>
 	<h1>My form wrapper</h1>
-	<hr/>
+	<nav><li><a href="index.php">Default</a></li><li><a href="example-login.php">Login form example</a></li></nav>
 	<?php echo $form->GenerateOutput(); ?>
 </body>
 </html>
