@@ -88,6 +88,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 	echo '<pre>';
 	var_dump($form->GetDataAsObject());
 	echo '</pre>';
+
 }
 
 ?>

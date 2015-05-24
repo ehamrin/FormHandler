@@ -49,12 +49,13 @@ class Form{
 			if($this->isValid() && !empty($this->successText)){
 
 				$message = '<p class="success">' . $this->successText . '</p>';
-
+				//$this->ClearSession();
 			}else if(!$this->isValid() && !empty($this->errorText)){
 
 				$message = '<p class="error">' . $this->errorText . '</p>';
 
 			}
+
 		}
 
 		return <<<HTML
@@ -177,7 +178,7 @@ HTML;
 
 	protected function ClearSession(){
 		if(isset($_SESSION[self::$SessionLocation][$this->formName])){
-			unset($_SESSION[self::$SessionLocation][$this->formName]);
+			$_SESSION[self::$SessionLocation][$this->formName] = array();
 		}
 	}
 
