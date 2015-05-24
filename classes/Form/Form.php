@@ -6,9 +6,9 @@ namespace Form;
 
 include 'Method.php';
 include 'Validator.php';
+include 'Element/InputType.php';
 include 'Element.php';
 include 'Element/Input.php';
-include 'Element/InputType.php';
 include 'Element/Textarea.php';
 include 'Element/Select.php';
 include 'Element/Checkbox.php';
@@ -28,9 +28,18 @@ class Form{
 	
 	const SavePadding = "Save_Button";
 	
-	public function __construct($name, $method){
+	public function __construct($name = "FormHandler", $method){
 		$this->formName = $name;
 		$this->method = $method;
+
+
+		if($this->WasSubmitted(true)){
+
+			$_SESSION[self::$SessionLocation][$this->formName] = $this->GetMethodArray(true);
+			header('Location: ' . $_SERVER['REQUEST_URI']);
+
+		}
+
 	}
 	
 	public function GenerateOutput(){
@@ -48,9 +57,6 @@ class Form{
 			}
 		}
 
-		//Save form to session
-		$this->Save();
-
 		return <<<HTML
 
 	<form method="{$this->method}" id="{$this->formName}">
@@ -62,33 +68,32 @@ class Form{
 HTML;
 	}
 
-	protected function Save(){
-		$_SESSION[self::$SessionLocation][$this->formName] = serialize($this);
-	}
 
-	public static function Load($name) {
-		if(!empty($_SESSION[self::$SessionLocation][$name]))
-			return unserialize($_SESSION[self::$SessionLocation][$name]);
-		else
-			return "";
-	}
-	
-	private function GetMethodArray(){
-		if($this->method == Method::POST && isset($_POST[$this->formName])){
+	protected function GetMethodArray($ignoreSession = false){
+
+		if(isset($_SESSION[self::$SessionLocation][$this->formName]) && $ignoreSession == false){
+
+			return 	$_SESSION[self::$SessionLocation][$this->formName];
+
+		}else if($this->method == Method::POST && isset($_POST[$this->formName])){
+
 			return $_POST[$this->formName];
+
 		}else if($this->method == Method::GET && isset($_GET[$this->formName])){
+
 			return $_GET[$this->formName];
+
 		}else{
 			return array();
 		}
 	}
 	
-	public function WasSubmitted(){
-		$data = $this->GetMethodArray();
+	public function WasSubmitted($ignoreSession = false){
+		$data = $this->GetMethodArray($ignoreSession);
 		return isset($data[self::SavePadding]);
 	}
-	
-	private function GetSaveButtonName(){
+
+	protected function GetSaveButtonName(){
 		return $this->formName . '[' . self::SavePadding . ']';
 	}
 
@@ -168,6 +173,12 @@ HTML;
 		$this->PopulateObject($object, $sanitize, $ignored);
 
 		return $object;
+	}
+
+	protected function ClearSession(){
+		if(isset($_SESSION[self::$SessionLocation][$this->formName])){
+			unset($_SESSION[self::$SessionLocation][$this->formName]);
+		}
 	}
 
 }

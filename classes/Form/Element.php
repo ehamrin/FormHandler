@@ -36,7 +36,7 @@ abstract class Element {
 
     public function Sanitize($ignored = array()){
 
-        if(property_exists($this, "type") && $this->type == InputType::Password){
+        if(property_exists($this, "type") && $this->type == \Form\Element\InputType::Password){
             return;
         }
 

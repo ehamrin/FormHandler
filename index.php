@@ -1,5 +1,6 @@
 <?php 
 include 'classes/Form/Form.php';
+session_start();
 
 $form = (new Form\Form("MyForm", Form\Method::POST))
 	->SetButtonText("Create")
