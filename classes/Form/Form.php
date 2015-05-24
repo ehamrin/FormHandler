@@ -56,7 +56,7 @@ class Form{
 	<form method="{$this->method}" id="{$this->formName}">
 			{$message}
 			{$this->inputHTML}
-			<button name="{$this->getSaveButtonName()}" value="1">{$this->saveText}</button>
+
 	</form>
 
 HTML;
@@ -115,6 +115,12 @@ HTML;
 		$input->SetFormName($this->formName);
 
 		$this->inputHTML .= $input->GetHTML($this->GetMethodArray());
+
+		return $this;
+	}
+
+	public function AddSubmit(){
+		$this->inputHTML .= '<button name="' . $this->getSaveButtonName() . '" value="1">' . $this->saveText . '</button>';
 
 		return $this;
 	}

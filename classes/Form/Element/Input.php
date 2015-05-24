@@ -2,6 +2,8 @@
 
 namespace Form\Element;
 
+use Form\Validator;
+
 class Input extends \Form\Element{
 
 	public $type;
@@ -23,19 +25,16 @@ class Input extends \Form\Element{
 	public function IsValid($errorMessage = false){
 		$messages = array();
 
-		if($this->required && empty($this->value)){
+		if($this->required || !empty($this->value)){
 
-			$messages[] = "Field cannot be empty";
-
-		}else if(!empty($this->value)){
-
-			$regex_mismatch = false;
+			if(empty($this->value)){
+				$messages[] = "Field cannot be empty";
+			}
 
 			foreach($this->validator as $regex){
-				if(preg_match($regex, $this->value) == 0 && $regex_mismatch == false){
-					$messages[] = "The value is not in a valid format";
+				if(preg_match($regex, $this->value) == 0){
+					$messages[] = Validator::ErrorMessage($regex);
 				}
-				$regex_mismatch = true;
 			}
 
 			if($this->maxLength && strlen($this->value) > $this->maxLength){
@@ -46,18 +45,17 @@ class Input extends \Form\Element{
 				$messages[] = "Must be longer than " . $this->minLength . " characters";
 			}
 
-
-
 			if(	count($this->range)){
 				$this->value = intval($this->value);
 
 				if((!preg_match(\Form\Validator::INT, $this->value) || !preg_match(\Form\Validator::FLOAT, $this->value)) &&
-				($this->value < $this->range["min"] || $this->value > $this->range["max"])
+					($this->value < $this->range["min"] || $this->value > $this->range["max"])
 				){
 					$messages[] = "Must be between " . $this->range["min"] . " and " . $this->range["max"];
 				}
 			}
 		}
+
 
 		$has_error = count($messages);
 

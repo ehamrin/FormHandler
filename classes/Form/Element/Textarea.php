@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Erik
- * Date: 5/24/2015
- * Time: 4:19 PM
- */
 
 namespace Form\Element;
+
+use Form\Validator;
 
 
 class Textarea extends \Form\Element{
@@ -17,25 +13,21 @@ class Textarea extends \Form\Element{
     public function IsValid($errorMessage = false){
         $messages = array();
 
-        if($this->required && empty($this->value)){
+        if($this->required || !empty($this->value)){
 
-            $messages[] = "Field cannot be empty";
-
-        }else if(!empty($this->value)){
-
-            $regex_mismatch = false;
+            if(empty($this->value)){
+                $messages[] = "Field cannot be empty";
+            }
 
             foreach($this->validator as $regex){
-                if(preg_match($regex, $this->value) == 0 && $regex_mismatch == false){
-                    $messages[] = "The value is not in a valid format";
+                if(preg_match($regex, $this->value) == 0){
+                    $messages[] = Validator::ErrorMessage($regex);
                 }
-                $regex_mismatch = true;
             }
 
             if($this->maxLength && strlen($this->value) > $this->maxLength){
                 $messages[] = "Must be shorter than " . $this->maxLength . " characters";
             }
-
         }
 
         $has_error = count($messages);

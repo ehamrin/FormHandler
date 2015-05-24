@@ -76,6 +76,7 @@ p.error,p.success{
 
 .form-group-error:hover{
     width: 200px;
+    height: auto;
 }
 
 .form-group-error li{
@@ -87,6 +88,7 @@ p.error,p.success{
 .form-group-error:hover li{
     display: block;
     margin-left: 30px;
+    margin-bottom: 10px;
 }
 
 input,

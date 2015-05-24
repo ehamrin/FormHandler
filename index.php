@@ -78,7 +78,8 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->SetRequired(true, true)
 		->SetValue('m')
 		->SetPrompt(' ')
-	);
+	)
+	->AddSubmit();
 
 if($form->WasSubmitted() && $form->IsValid()){
 
