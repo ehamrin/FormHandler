@@ -85,11 +85,13 @@ class Input extends ElementBase{
 			$this->value = $data[$this->hashed_name];
 		}
 
+		$errormessage = $this->getErrorMessageHTML($data);
+
 		return <<<HTML
 		<div class="form-group">
 			{$this->getLabelHTML()}
 			<input id="{$this->hashed_name}" class="{$this->getClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->getRequiredHTML()}
-			{$this->getErrorMessageHTML($data)}
+			{$errormessage}
 		</div>
 HTML;
 	}

@@ -99,7 +99,7 @@ abstract class ElementBase {
     }
 
     public function getLabelHTML(){
-        return ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . ':</label>' : '';
+        return ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . '</label>' : '';
     }
 
     public function getErrorMessageHTML($data){

@@ -1,8 +1,6 @@
 <?php 
 include 'classes/Form/Form.php';
 
-
-
 $form = (new Form\Form("MyForm", Form\Method::POST))
 	->setButtonText("Create")
 	->setSuccessMessage("You successfully submitted the form")
@@ -18,8 +16,10 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->setRequired(true)
 		->setValidator(Form\Validator::SWEDISH_PID)
 	)
+
 	->AddCustomHTML("<fieldset>")
 	->AddCustomHTML("<legend>You can add custom HTML</legend>")
+
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "int"))
 		->setPlaceholder("1234")
 		->setPrompt("Int (range, numeric)")
@@ -32,7 +32,9 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->setRequired(true)
 		->setValidator(Form\Validator::FLOAT)
 	)
+
 	->AddCustomHTML("</fieldset>")
+
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "postal"))
 		->setPlaceholder("123 45")
 		->setPrompt("Postal Code (SWE), required but hidden asterisk")
@@ -60,6 +62,24 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->setPlaceholder("Choose Category")
 		->setOptionPadding(1)
 		->addOption("Added after contructor")
+	)->AddInput((new Form\Element\Select("car", array(
+		"1354" => "Audi",
+		"1355" => "Volkswagen",
+		"135654" => "Fiat",
+		"13" => "BMW"
+		)))
+		->setPrompt("Car (loaded ID)")
+		->setPlaceholder("Choose Car")
+		->setValue(13)
+	)->AddInput((new Form\Element\Checkbox('is_human'))
+		->setPrompt("Can you check it?")
+		->setRequired(true)
+	)->AddInput((new Form\Element\RadioGroup("gender", array(
+		"m" => "Male",
+		"f" => "Female"
+	)))
+		->setRequired(true, true)
+		->setValue('m')
 	);
 
 if($form->wasSubmitted() && $form->isValid()){
