@@ -9,6 +9,7 @@ include 'Validator.php';
 include 'Element.php';
 include 'Element/Input.php';
 include 'Element/InputType.php';
+include 'Element/Textarea.php';
 include 'Element/Select.php';
 include 'Element/Checkbox.php';
 include 'Element/RadioGroup.php';

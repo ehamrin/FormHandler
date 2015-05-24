@@ -54,6 +54,7 @@ p.error,p.success{
     text-align: right;
     box-sizing: border-box;
     padding-right: 10px;
+    vertical-align: top;
 }
 
 
@@ -88,7 +89,9 @@ p.error,p.success{
     margin-left: 30px;
 }
 
-input, select{
+input,
+select,
+textarea{
     width: 230px;
     box-sizing: border-box;
     padding: 5px;
@@ -96,6 +99,7 @@ input, select{
     font-size: 15px;
     color: #333;
     vertical-align: top;
+    resize: none;
 }
 
 .radio-group{

@@ -91,7 +91,7 @@ class Input extends \Form\Element{
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->GetRequiredHTML()}
+				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->GetRequiredHTML()}
 				{$errormessage}
 			</div>
 HTML;

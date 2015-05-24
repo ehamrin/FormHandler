@@ -19,19 +19,15 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->SetValidator(Form\Validator::SWEDISH_PID)
 	)
 
-	->AddCustomHTML('<div class="small">You can add you own HTML in between elements to place extra content that you want to have in you form</div>')
+	->AddCustomHTML('<div class="small">
+					You can add you own HTML in between elements to place extra content that you want to have in you form,
+					<a href="#">like this link</a>
+					</div>')
 
-	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "int"))
-		->SetPlaceholder("1234")
-		->SetPrompt("Int (range, numeric)")
-		->SetRequired(true)
-		->SetRange(10,500)
-	)
-	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "float"))
-		->SetPlaceholder("12.59")
-		->SetPrompt("Float")
-		->SetRequired(true)
-		->SetValidator(Form\Validator::FLOAT)
+	->AddInput((new Form\Element\Textarea("extra"))
+		->SetPlaceholder("Write your content here")
+		->SetPrompt("Info")
+		->SetMaxLength(150)
 	)
 	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "postal"))
 		->SetPlaceholder("123 45")
