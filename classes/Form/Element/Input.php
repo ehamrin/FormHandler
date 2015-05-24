@@ -20,7 +20,7 @@ class Input extends ElementBase{
 		$this->type = $type;
 	}
 
-	public function isValid($errorMessage = false){
+	public function IsValid($errorMessage = false){
 		$messages = array();
 
 		if($this->required && empty($this->value)){
@@ -62,7 +62,7 @@ class Input extends ElementBase{
 		$has_error = count($messages);
 
 		if($has_error){
-			$this->setClass("error");
+			$this->SetClass("error");
 
 			if($errorMessage){
 				return $messages;
@@ -78,19 +78,19 @@ class Input extends ElementBase{
 	 *     HTML Generators
 	 *
 	 ****************************/
-	public function getHTML($data)
+	public function GetHTML($data)
 	{
 		//Was the data posted?
 		if (isset($data[$this->hashed_name])) {
 			$this->value = $data[$this->hashed_name];
 		}
 
-		$errormessage = $this->getErrorMessageHTML($data);
+		$errormessage = $this->GetErrorMessageHTML($data);
 
 		return <<<HTML
 		<div class="form-group">
-			{$this->getLabelHTML()}
-			<input id="{$this->hashed_name}" class="{$this->getClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->getRequiredHTML()}
+			{$this->GetLabelHTML()}
+			<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->GetRequiredHTML()}
 			{$errormessage}
 		</div>
 HTML;
@@ -104,25 +104,25 @@ HTML;
 	 *
 	 **********************/
 
-	public function setPlaceholder($string){
+	public function SetPlaceholder($string){
 		$this->placeholder = $string;
 
 		return $this;
 	}
 
-	public function setMaxLength($number){
+	public function SetMaxLength($number){
 		$this->maxLength = $number;
 
 		return $this;
 	}
 
-	public function setMinLength($number){
+	public function SetMinLength($number){
 		$this->minLength = $number;
 
 		return $this;
 	}
 
-	public function setRange($min, $max){
+	public function SetRange($min, $max){
 		$this->range['min'] = $min;
 		$this->range['max'] = $max;
 

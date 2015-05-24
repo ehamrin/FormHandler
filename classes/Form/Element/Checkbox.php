@@ -11,10 +11,8 @@ namespace Form\Element;
 
 class Checkbox extends ElementBase{
 
-    public function isValid($errorMessage = false){
+    public function IsValid($errorMessage = false){
         $messages = array();
-
-        var_dump($this->value);
 
         if($this->required && empty($this->value)){
 
@@ -25,7 +23,7 @@ class Checkbox extends ElementBase{
         $has_error = count($messages);
 
         if($has_error){
-            $this->setClass("error");
+            $this->SetClass("error");
 
             if($errorMessage){
                 return $messages;
@@ -41,30 +39,30 @@ class Checkbox extends ElementBase{
      *     HTML Generators
      *
      ****************************/
-    public function getHTML($data)
+    public function GetHTML($data)
     {
         //Was the data posted?
         if (isset($data[$this->hashed_name])) {
             $this->value = $data[$this->hashed_name];
         }
 
-        $errormessage = $this->getErrorMessageHTML($data);
+        $errormessage = $this->GetErrorMessageHTML($data);
         $checked = $this->value == 'on' ? 'checked="checked"' : '' ;
         return <<<HTML
 		<div class="form-group">
-			{$this->getLabelHTML()}
-			<input id="{$this->hashed_name}" class="{$this->getClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked/>{$this->getRequiredHTML()}
+			{$this->GetLabelHTML()}
+			<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked/>{$this->GetRequiredHTML()}
 			{$errormessage}
 		</div>
 HTML;
     }
 
-    public function getErrorMessageHTML($data){
+    public function GetErrorMessageHTML($data){
 
         $ret = "";
         if(count($data)) {
             //Check validation
-            $result = $this->isValid(true);
+            $result = $this->IsValid(true);
 
             //Loop through error messages
             if (is_array($result)) {

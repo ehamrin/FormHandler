@@ -19,7 +19,7 @@ class RadioGroup extends ElementBase{
         $this->options = $options;
     }
 
-    public function isValid($errorMessage = false){
+    public function IsValid($errorMessage = false){
         $messages = array();
 
         if($this->required && empty($this->value)){
@@ -31,7 +31,7 @@ class RadioGroup extends ElementBase{
         $has_error = count($messages);
 
         if($has_error){
-            $this->setClass("error");
+            $this->SetClass("error");
 
             if($errorMessage){
                 return $messages;
@@ -47,7 +47,7 @@ class RadioGroup extends ElementBase{
      *     HTML Generators
      *
      ****************************/
-    public function getHTML($data)
+    public function GetHTML($data)
     {
         //Was the data posted?
         if (isset($data[$this->hashed_name])) {
@@ -61,26 +61,26 @@ class RadioGroup extends ElementBase{
             $options .= '<label for="' . $val . $this->hashed_name . '" class="radio-label">' . $option . '</label>';
         }
 
-        $errormessage = $this->getErrorMessageHTML($data);
+        $errormessage = $this->GetErrorMessageHTML($data);
 
         return <<<HTML
 		<div class="form-group">
-			{$this->getLabelHTML()}
+			{$this->GetLabelHTML()}
 			<div class="radio-group">
 			    {$options}
 			</div>
-			{$this->getRequiredHTML()}
+			{$this->GetRequiredHTML()}
 			{$errormessage}
 		</div>
 HTML;
     }
 
-    public function getErrorMessageHTML($data){
+    public function GetErrorMessageHTML($data){
 
         $ret = "";
         if(count($data)) {
             //Check validation
-            $result = $this->isValid(true);
+            $result = $this->IsValid(true);
 
             //Loop through error messages
             if (is_array($result)) {

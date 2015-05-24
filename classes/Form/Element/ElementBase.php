@@ -25,7 +25,7 @@ abstract class ElementBase {
         $this->name = $name;
     }
 
-    public function isValid($errorMessage = false){
+    public function IsValid($errorMessage = false){
 
         if($errorMessage && $this->required && empty($this->value)){
             return array("This element is required");
@@ -49,65 +49,65 @@ abstract class ElementBase {
     }
 
 
-    public function setValue($string){
+    public function SetValue($string){
         $this->value = $string;
 
         return $this;
     }
 
-    public function setClass($string){
+    public function SetClass($string){
         $this->class[] = $string;
 
         return $this;
     }
 
-    public function setRequired($bool = true, $hide = false){
+    public function SetRequired($bool = true, $hide = false){
         $this->required = $bool;
         $this->showRequired = !$hide;
 
         return $this;
     }
 
-    public function setPrompt($string){
+    public function SetPrompt($string){
         $this->prompt = $string;
 
         return $this;
     }
 
-    public function setFormName($string){
+    public function SetFormName($string){
         $this->formName = $string;
         $this->hashed_name = sha1($this->formName . '_' . $this->name);
     }
 
-    public function setValidator($regex){
+    public function SetValidator($regex){
         $this->validator[] = $regex;
 
         return $this;
     }
 
-    public function getHTML($data){
+    public function GetHTML($data){
         return "";
     }
 
-    public function getClassString(){
+    public function GetClassString(){
         return implode(' ', $this->class);
     }
 
-    public function getRequiredHTML(){
+    public function GetRequiredHTML(){
         return $this->required && $this->showRequired ? '<span class="required">*</span>' : '';
 
     }
 
-    public function getLabelHTML(){
+    public function GetLabelHTML(){
         return ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . '</label>' : '';
     }
 
-    public function getErrorMessageHTML($data){
+    public function GetErrorMessageHTML($data){
 
         $ret = "";
         if (isset($data[$this->hashed_name])) {
             //Check validation
-            $result = $this->isValid(true);
+            $result = $this->IsValid(true);
 
             //Loop through error messages
             if (is_array($result)) {

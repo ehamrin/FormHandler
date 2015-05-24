@@ -20,7 +20,7 @@ class Select extends ElementBase{
         $this->options = $options;
     }
 
-    public function isValid($errorMessage = false){
+    public function IsValid($errorMessage = false){
 
         if($errorMessage && $this->required && empty($this->value)){
             return array("You must select an option");
@@ -29,7 +29,7 @@ class Select extends ElementBase{
         return !($this->required && empty($this->value));
     }
 
-    public function getHTML($data){
+    public function GetHTML($data){
 
         if (isset($data[$this->hashed_name])) {
             $this->value = $data[$this->hashed_name];
@@ -44,29 +44,29 @@ class Select extends ElementBase{
 
         return <<<HTML
 		<div class="form-group form-select">
-            {$this->getLabelHTML()}
-			<select id="{$this->hashed_name}" class="{$this->getClassString()}" name="{$this->formName}[{$this->hashed_name}]" >
+            {$this->GetLabelHTML()}
+			<select id="{$this->hashed_name}" class="{$this->GetClassString()}" name="{$this->formName}[{$this->hashed_name}]" >
                 {$options}
 			</select>
-			{$this->getRequiredHTML()}
-			{$this->getErrorMessageHTML($data)}
+			{$this->GetRequiredHTML()}
+			{$this->GetErrorMessageHTML($data)}
 		</div>
 HTML;
     }
 
-    public function setPlaceholder($string){
+    public function SetPlaceholder($string){
         $this->placeholder = $string;
 
         return $this;
     }
 
-    public function setOptionPadding($int){
+    public function SetOptionPadding($int){
         $this->optionPadding = $int;
 
         return $this;
     }
 
-    public function addOption($option){
+    public function AddOption($option){
         if(is_array($option)){
             foreach($option as $key => $value) {
                 $this->options[$key] = $value;

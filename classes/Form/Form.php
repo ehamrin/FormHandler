@@ -10,6 +10,8 @@ include 'Element/ElementBase.php';
 include 'Element/Input.php';
 include 'Element/InputType.php';
 include 'Element/Select.php';
+include 'Element/Checkbox.php';
+include 'Element/RadioGroup.php';
 
 
 class Form{
@@ -53,7 +55,7 @@ class Form{
 HTML;
 	}
 	
-	private function getMethodArray(){
+	private function GetMethodArray(){
 		if($this->method == Method::POST && isset($_POST[$this->formName])){
 			return $_POST[$this->formName];
 		}else if($this->method == Method::GET && isset($_GET[$this->formName])){
@@ -63,26 +65,26 @@ HTML;
 		}
 	}
 	
-	public function wasSubmitted(){
-		$data = $this->getMethodArray();
+	public function WasSubmitted(){
+		$data = $this->GetMethodArray();
 		return isset($data[self::SavePadding]);
 	}
 	
-	private function getSaveButtonName(){
+	private function GetSaveButtonName(){
 		return $this->formName . '[' . self::SavePadding . ']';
 	}
 
-	public function setButtonText($string){
+	public function SetButtonText($string){
 		$this->saveText = $string;
 		return $this;
 	}
 
-	public function setSuccessMessage($string){
+	public function SetSuccessMessage($string){
 		$this->successText = $string;
 		return $this;
 	}
 
-	public function setErrorMessage($string){
+	public function SetErrorMessage($string){
 		$this->errorText = $string;
 		return $this;
 	}
@@ -91,9 +93,9 @@ HTML;
 
 		$this->inputRepository[$input->name] = $input;
 
-		$input->setFormName($this->formName);
+		$input->SetFormName($this->formName);
 
-		$this->inputHTML .= $input->getHTML($this->getMethodArray());
+		$this->inputHTML .= $input->GetHTML($this->GetMethodArray());
 
 		return $this;
 	}
@@ -106,9 +108,9 @@ HTML;
 		return $this;
 	}
 
-	public function isValid(){
+	public function IsValid(){
 		foreach ($this->inputRepository as $input){
-			if(!$input->isValid()){
+			if(!$input->IsValid()){
 				return false;
 			}
 		}
@@ -120,7 +122,7 @@ HTML;
 
 		foreach ($this->inputRepository as $input){
 
-			if($input->isValid()){
+			if($input->IsValid()){
 
 				if($sanitize){
 					$input->Sanitize($ignored);
