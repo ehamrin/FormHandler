@@ -9,7 +9,7 @@
 namespace Form\Element;
 
 
-class Checkbox extends ElementBase{
+class Checkbox extends \Form\Element{
 
     public function IsValid($errorMessage = false){
         $messages = array();

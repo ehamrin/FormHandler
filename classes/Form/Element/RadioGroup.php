@@ -9,7 +9,7 @@
 namespace Form\Element;
 
 
-class RadioGroup extends ElementBase{
+class RadioGroup extends \Form\Element{
 
     private $options;
 

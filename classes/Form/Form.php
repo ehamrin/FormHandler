@@ -6,7 +6,7 @@ namespace Form;
 
 include 'Method.php';
 include 'Validator.php';
-include 'Element/ElementBase.php';
+include 'Element.php';
 include 'Element/Input.php';
 include 'Element/InputType.php';
 include 'Element/Select.php';
@@ -23,6 +23,7 @@ class Form{
 	private $successText = "";
 	private $errorText = "";
 	private $inputRepository = array();
+	private static $SessionLocation = "FormHandler";
 	
 	const SavePadding = "Save_Button";
 	
@@ -46,6 +47,9 @@ class Form{
 			}
 		}
 
+		//Save form to session
+		$this->Save();
+
 		return <<<HTML
 
 	<form method="{$this->method}" id="{$this->formName}">
@@ -55,6 +59,17 @@ class Form{
 	</form>
 
 HTML;
+	}
+
+	protected function Save(){
+		$_SESSION[self::$SessionLocation][$this->formName] = serialize($this);
+	}
+
+	public static function Load($name) {
+		if(!empty($_SESSION[self::$SessionLocation][$name]))
+			return unserialize($_SESSION[self::$SessionLocation][$name]);
+		else
+			return "";
 	}
 	
 	private function GetMethodArray(){
@@ -76,6 +91,7 @@ HTML;
 		return $this->formName . '[' . self::SavePadding . ']';
 	}
 
+
 	public function SetButtonText($string){
 		$this->saveText = $string;
 		return $this;
@@ -91,7 +107,7 @@ HTML;
 		return $this;
 	}
 
-	public function AddInput(Element\ElementBase $input){
+	public function AddInput(Element $input){
 
 		$this->inputRepository[$input->name] = $input;
 

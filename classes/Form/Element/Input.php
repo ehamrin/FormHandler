@@ -2,7 +2,7 @@
 
 namespace Form\Element;
 
-class Input extends ElementBase{
+class Input extends \Form\Element{
 
 	public $type;
 	public $placeholder = "";

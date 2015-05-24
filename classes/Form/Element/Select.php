@@ -9,7 +9,7 @@
 namespace Form\Element;
 
 
-class Select extends ElementBase{
+class Select extends \Form\Element{
     public $placeholder = "";
     private $options;
     private $optionPadding;
