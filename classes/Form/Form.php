@@ -3,7 +3,6 @@
 
 namespace Form;
 
-
 include 'Method.php';
 include 'Validator.php';
 include 'String.php';
@@ -26,7 +25,8 @@ class Form{
 	private $errorText = "";
 	private $inputRepository = array();
 	public static $SessionLocation = "FormHandler";
-	
+	const SALT = "Ent3r_Y0ur_0Wn_Str!ng_H3r3";
+
 	const SavePadding = "Save_Button";
 	
 	public function __construct($name = "FormHandler", $method){

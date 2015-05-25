@@ -76,7 +76,8 @@ abstract class Element {
 
     public function SetFormName($string){
         $this->formName = $string;
-        $this->hashed_name = sha1($this->formName . '_' . $this->name);
+
+        $this->hashed_name = 'a' . hash('sha256', \Form\Form::SALT . hash('sha256', $this->formName . '_' . $this->name));
     }
 
     public function SetValidator($regex){

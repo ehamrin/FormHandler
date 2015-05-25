@@ -8,6 +8,7 @@ class String {
     const SESSION_LOCATION = "lang";
     const ENGLISH = "eng";
     const SWEDISH = "sv";
+    const GERMAN = "de";
 
     public static function Get($string){
         if(!func_num_args()){
@@ -92,6 +93,29 @@ class String {
             "Field_Short" => "Måste vara kortare än {0} tecken",
             "Field_Long" => "Måste vara längre än {0} tecken",
             "Field_Range" => "Måste vara mellan {0} och {1}",
+        ),
+        self::GERMAN => array(
+            "Save_Button" => "Speichern",
+
+            "Validator_SWE_PID" => "Persönliche Identifikationsnummer ist ungültig",
+            "Validator_US_SSN" => "Die US persönliche Nummer ( SSN) ist ungültig",
+            "Validator_US_Postal" => "Die Postleitzahl ist ungültig",
+            "Validator_Email" => "Die E-Mail ist ungültig",
+            "Validator_Int" => "Der Wert kann nur Zahlen enthalten",
+            "Validator_Float" => "Der Wert muss eine Dezimalzahl sein",
+            "Validator_Date" => "Das Datum kann nicht als YYYY-MM-DD interpretiert werden",
+            "Validator_HEX" => "Nicht ein Hexadezimalwert",
+            "Validator_URL" => "Keine gültige URL",
+            "Validator_IP" => "Keine gültige IP-Adresse",
+            "Validator_Credit_Card" => "Nicht gültige Kreditkarte",
+            "Validator_Default" => "Falsches Format",
+
+            "Field_Empty" => "Feld darf nicht leer sein",
+            "Field_Empty_Check" => "Muss geprüft werden",
+            "Field_Empty_Select" => "Sie müssen eine Option aus",
+            "Field_Short" => "Darf nicht mehr als {0} Zeichen lang sein",
+            "Field_Long" => "Muss länger als {0} Zeichen lang sein",
+            "Field_Range" => "Muss zwischen {0} uns {1} sein",
         )
     );
 }

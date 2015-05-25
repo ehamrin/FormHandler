@@ -78,7 +78,6 @@ HTML;
                 return $ret;
             }
 
-            return null;
         }
         return null;
 
