@@ -31,6 +31,27 @@ form{
     margin-top: 50px;
 }
 
+nav li{
+    display: inline;
+    text-align: center;
+    padding: 15px 10px;
+
+}
+
+nav li a{
+    color: #222;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+nav li a:hover{
+
+    text-decoration: underline;
+}
+
+nav{
+    text-align: center;
+}
 p.error,p.success{
     padding: 10px;
 }

@@ -50,9 +50,10 @@ class Form{
 		$message = null;
 
 		if($this->wasSubmitted()){
-			if($this->isValid() && !empty($this->successText)){
-
-				$message = '<p class="success">' . $this->successText . '</p>';
+			if($this->isValid()){
+				if(!empty($this->successText)) {
+					$message = '<p class="success">' . $this->successText . '</p>';
+				}
 				$this->ClearSession();
 
 			}else if(!$this->isValid() && !empty($this->errorText)){
@@ -130,7 +131,11 @@ HTML;
 		return $this;
 	}
 
-	public function AddSubmit(){
+	public function AddSubmit($string = ""){
+		if(!empty($string)){
+			$this->saveText = $string;
+		}
+
 		$this->inputHTML .= '<button name="' . $this->getSaveButtonName() . '" value="1">' . $this->saveText . '</button>';
 
 		return $this;

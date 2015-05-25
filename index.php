@@ -1,10 +1,12 @@
 <?php 
 include 'classes/Form/Form.php';
 session_start();
-\Form\String::SetLanguage("sv");
-$form = (new Form\Form("MyForm", Form\Method::POST))
-	->SetButtonText("Create")
 
+
+\Form\String::SetLanguage(\Form\String::ENGLISH);
+
+
+$form = (new Form\Form("MyForm", Form\Method::POST))
 	->SetSuccessMessage("You successfully submitted the form")
 	->SetErrorMessage("You submitted the form, but there were errors validating.")
 
@@ -80,7 +82,7 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->SetValue('m')
 		->SetPrompt(' ')
 	)
-	->AddSubmit();
+	->AddSubmit("Create");
 
 if($form->WasSubmitted() && $form->IsValid()){
 
@@ -101,10 +103,13 @@ if($form->WasSubmitted() && $form->IsValid()){
 	<link href="style.css" rel="stylesheet">
 </head>
 <body>
+
 	<h1>My form wrapper</h1>
-	<nav><li><a href="index.php">Default</a></li><li><a href="example-login.php">Login form example</a></li></nav>
+	<nav><li><a href="index.php">Default</a></li><li><a href="example-swedish.php">Default(Swedish)</a></li><li><a href="example-login.php">Login form example</a></li></nav>
+
 
 	<?php echo $form->GenerateOutput(); ?>
+
 </body>
 </html>
 

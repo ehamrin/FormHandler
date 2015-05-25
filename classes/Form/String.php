@@ -35,6 +35,10 @@ class String {
             $translated = str_replace('{' . $key . '}', $argument, $translated);
         }
 
+        if(preg_match("/{\d+}/", $translated)){
+            throw new \ErrorException("String \"" . $translated . "\" expects arguments");
+        }
+
         return $translated;
     }
 

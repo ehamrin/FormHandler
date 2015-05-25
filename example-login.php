@@ -3,8 +3,9 @@ include 'classes/Form/Form.php';
 
 session_start();
 
+\Form\String::SetLanguage(\Form\String::ENGLISH);
+
 $form = (new Form\Form("SignInForm", Form\Method::POST))
-    ->setButtonText("Sign in")
     ->setErrorMessage("Ooops. Check errors and try again")
     ->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "username"))
         ->SetPrompt("Username")
@@ -14,13 +15,14 @@ $form = (new Form\Form("SignInForm", Form\Method::POST))
         ->SetPrompt("Password")
         ->SetRequired(true, true)
     )
-    ->AddSubmit();
+    ->AddSubmit("Sign in");
 
 if($form->wasSubmitted() && $form->isValid()){
     //This would be were you set you session data and redirect the user
     echo '<pre>';
     var_dump($form->GetDataAsObject());
     echo '</pre>';
+
 }
 
 ?>
@@ -34,7 +36,7 @@ if($form->wasSubmitted() && $form->isValid()){
 </head>
 <body>
 <h1>Login form</h1>
-<nav><li><a href="index.php">Default</a></li><li><a href="example-login.php">Login form example</a></li></nav>
+<nav><li><a href="index.php">Default</a></li><li><a href="example-swedish.php">Default(Swedish)</a></li><li><a href="example-login.php">Login form example</a></li></nav>
 <?php echo $form->GenerateOutput(); ?>
 </body>
 </html>
