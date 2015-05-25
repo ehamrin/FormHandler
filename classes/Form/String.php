@@ -64,6 +64,11 @@ class String {
             "Validator_Credit_Card" => "Not a valid credit card number",
             "Validator_Default" => "Wrong format",
 
+            "Comparator_Greater_Than" => "Value must be greater than {0}",
+            "Comparator_Greater_Than_Equal" => "Value must be greater than or equal to {0}",
+            "Comparator_Less_Than" => "Value must be less than {0}",
+            "Comparator_Less_Than_Equal" => "Value must be less than or equal to {0}",
+
             "Field_Empty" => "Field cannot be empty",
             "Field_Empty_Check" => "Must be checked",
             "Field_Empty_Select" => "You must select an option",

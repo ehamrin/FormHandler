@@ -2,8 +2,10 @@
 include 'classes/Form/Form.php';
 session_start();
 
+if(isset($_GET['lang'])){
+	\Form\String::SetLanguage($_GET['lang']);
+}
 
-\Form\String::SetLanguage(\Form\String::ENGLISH);
 
 
 $form = (new Form\Form("MyForm", Form\Method::POST))
@@ -21,7 +23,6 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->SetRequired(true)
 		->SetValidator(Form\Validator::SWEDISH_PID)
 	)
-
 	->AddCustomHTML('<div class="small">
 					You can add you own HTML in between elements to place extra content that you want to have in you form,
 					<a href="#">like this link</a>
@@ -81,8 +82,7 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->SetRequired(true, true)
 		->SetValue('m')
 		->SetPrompt(' ')
-	)
-	->AddSubmit("Create");
+	)->AddSubmit();
 
 if($form->WasSubmitted() && $form->IsValid()){
 
@@ -109,7 +109,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 
 
 	<?php echo $form->GenerateOutput(); ?>
-
+	<nav><li><a href="?lang=<?php echo \Form\String::ENGLISH; ?>">English</a></li><li><a href="?lang=<?php echo \Form\String::SWEDISH; ?>">Swedish</a></li><li><a href="?lang=<?php echo \Form\String::GERMAN; ?>">German</a></li></nav>
 </body>
 </html>
 
