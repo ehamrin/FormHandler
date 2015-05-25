@@ -6,6 +6,7 @@ namespace Form;
 
 include 'Method.php';
 include 'Validator.php';
+include 'String.php';
 include 'Element/InputType.php';
 include 'Element.php';
 include 'Element/Input.php';
@@ -20,11 +21,11 @@ class Form{
 	private $formName;
 	private $method;
 	private $inputHTML = "";
-	private $saveText = "Save";
+	private $saveText;
 	private $successText = "";
 	private $errorText = "";
 	private $inputRepository = array();
-	private static $SessionLocation = "FormHandler";
+	public static $SessionLocation = "FormHandler";
 	
 	const SavePadding = "Save_Button";
 	
@@ -37,8 +38,11 @@ class Form{
 
 			$_SESSION[self::$SessionLocation][$this->formName] = $this->GetMethodArray(true);
 			header('Location: ' . $_SERVER['REQUEST_URI']);
+			die();
 
 		}
+
+		$this->saveText = String::Get("Save_Button");
 
 	}
 	
@@ -49,7 +53,8 @@ class Form{
 			if($this->isValid() && !empty($this->successText)){
 
 				$message = '<p class="success">' . $this->successText . '</p>';
-				//$this->ClearSession();
+				$this->ClearSession();
+
 			}else if(!$this->isValid() && !empty($this->errorText)){
 
 				$message = '<p class="error">' . $this->errorText . '</p>';
@@ -178,7 +183,7 @@ HTML;
 
 	protected function ClearSession(){
 		if(isset($_SESSION[self::$SessionLocation][$this->formName])){
-			$_SESSION[self::$SessionLocation][$this->formName] = array();
+			unset($_SESSION[self::$SessionLocation][$this->formName]);
 		}
 	}
 

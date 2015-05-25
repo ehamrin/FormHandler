@@ -28,7 +28,7 @@ abstract class Element {
     public function IsValid($errorMessage = false){
 
         if($errorMessage && $this->required && empty($this->value)){
-            return array("This element is required");
+            return array(String::Get("Field_Empty"));
         }
 
         return !($this->required && empty($this->value));

@@ -16,7 +16,7 @@ class Textarea extends \Form\Element{
         if($this->required || !empty($this->value)){
 
             if(empty($this->value)){
-                $messages[] = "Field cannot be empty";
+                $messages[] = \Form\String::Get("Field_Empty");
             }
 
             foreach($this->validator as $regex){
@@ -26,7 +26,7 @@ class Textarea extends \Form\Element{
             }
 
             if($this->maxLength && strlen($this->value) > $this->maxLength){
-                $messages[] = "Must be shorter than " . $this->maxLength . " characters";
+                $messages[] = \Form\String::Get("Field_Short", $this->maxLength);
             }
         }
 

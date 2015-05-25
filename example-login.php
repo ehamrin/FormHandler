@@ -1,6 +1,8 @@
 <?php
 include 'classes/Form/Form.php';
 
+session_start();
+
 $form = (new Form\Form("SignInForm", Form\Method::POST))
     ->setButtonText("Sign in")
     ->setErrorMessage("Ooops. Check errors and try again")

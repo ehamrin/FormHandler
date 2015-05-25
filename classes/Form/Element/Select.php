@@ -23,7 +23,7 @@ class Select extends \Form\Element{
     public function IsValid($errorMessage = false){
 
         if($errorMessage && $this->required && empty($this->value)){
-            return array("You must select an option");
+            return array(\Form\String::Get("Field_Empty_Select"));
         }
 
         return !($this->required && empty($this->value));

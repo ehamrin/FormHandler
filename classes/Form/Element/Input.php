@@ -28,7 +28,8 @@ class Input extends \Form\Element{
 		if($this->required || !empty($this->value)){
 
 			if(empty($this->value)){
-				$messages[] = "Field cannot be empty";
+
+				$messages[] = \Form\String::Get("Field_Empty");
 			}
 
 			foreach($this->validator as $regex){
@@ -38,11 +39,11 @@ class Input extends \Form\Element{
 			}
 
 			if($this->maxLength && strlen($this->value) > $this->maxLength){
-				$messages[] = "Must be shorter than " . $this->maxLength . " characters";
+				$messages[] = \Form\String::Get("Field_Short", $this->maxLength);
 			}
 
 			if($this->minLength && strlen($this->value) < $this->minLength){
-				$messages[] = "Must be longer than " . $this->minLength . " characters";
+				$messages[] = \Form\String::Get("Field_Long", $this->minLength);
 			}
 
 			if(	count($this->range)){
@@ -51,7 +52,7 @@ class Input extends \Form\Element{
 				if((!preg_match(\Form\Validator::INT, $this->value) || !preg_match(\Form\Validator::FLOAT, $this->value)) &&
 					($this->value < $this->range["min"] || $this->value > $this->range["max"])
 				){
-					$messages[] = "Must be between " . $this->range["min"] . " and " . $this->range["max"];
+					$messages[] = \Form\String::Get("Field_Range", $this->range["min"], $this->range["max"]);
 				}
 			}
 		}

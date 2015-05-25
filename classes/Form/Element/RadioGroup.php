@@ -24,7 +24,7 @@ class RadioGroup extends \Form\Element{
 
         if($this->required && empty($this->value)){
 
-            $messages[] = "Must be checked";
+            $messages[] = \Form\String::Get("Field_Empty_Check");
 
         }
 

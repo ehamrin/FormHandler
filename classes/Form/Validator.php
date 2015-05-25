@@ -38,40 +38,40 @@ class Validator {
     public static function ErrorMessage($validator){
         switch($validator){
             case self::SWEDISH_PID:
-                return "Personal Identification Number is not valid";
+                return String::Get("Validator_SWE_PID");
                 break;
             case self::US_SOCIAL_SECURITY:
-                return "Social Security Number is not in a valid format";
+                return String::Get("Validator_US_SSN");
                 break;
             case self::SWEDISH_POSTAL_CODE:
-                return "Postal code should match: 123 45";
+                return String::Get("Validator_US_Postal");
                 break;
             case self::EMAIL:
-                return "Email address is not valid";
+                return String::Get("Validator_Email");
                 break;
             case self::INT:
-                return "Value can only contain numbers";
+                return String::Get("Validator_Int");
                 break;
             case self::FLOAT:
-                return "Value have to be a decimal number";
+                return String::Get("Validator_Float");
                 break;
             case self::DATE:
-                return "Date doesn't match YYYY-MM-DD";
+                return String::Get("Validator_Date");
                 break;
             case self::HEXA_DECIMAL:
-                return "Not a hexadecimal value";
+                return String::Get("Validator_HEX");
                 break;
             case self::URL:
-                return "Not a valid URL";
+                return String::Get("Validator_URL");
                 break;
             case self::IP_ADDRESS:
-                return "No a valid IP address";
+                return String::Get("Validator_IP");
                 break;
             case self::CREDIT_CARD:
-                return "Not a valid credit card number";
+                return String::Get("Validator_Credit_Card");
                 break;
             default:
-                return "Wrong format";
+                return String::Get("Validator_Default");
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php 
 include 'classes/Form/Form.php';
 session_start();
-
+\Form\String::SetLanguage("sv");
 $form = (new Form\Form("MyForm", Form\Method::POST))
 	->SetButtonText("Create")
 
@@ -103,6 +103,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 <body>
 	<h1>My form wrapper</h1>
 	<nav><li><a href="index.php">Default</a></li><li><a href="example-login.php">Login form example</a></li></nav>
+
 	<?php echo $form->GenerateOutput(); ?>
 </body>
 </html>
