@@ -89,6 +89,10 @@ abstract class Element {
             return;
         }
 
+        if($this instanceof \Form\Element\File){
+            return;
+        }
+
         foreach($ignored as $name){
             if($name == $this->name){
                 return;
@@ -165,7 +169,8 @@ abstract class Element {
     public function GetErrorMessageHTML($data){
 
         $ret = "";
-        if (isset($data[$this->hashed_name])) {
+
+        if (isset($data[$this->hashed_name]) || isset($data[Form::$FileLocation][$this->hashed_name])) {
             //Check validation
             $result = $this->IsValid(true);
 

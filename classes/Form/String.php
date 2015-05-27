@@ -76,6 +76,10 @@ class String {
             "Field_Short" => "Must be shorter than {0} characters",
             "Field_Long" => "Must be longer than {0} characters",
             "Field_Range" => "Must be between {0} and {1}",
+
+            "File_Uploaded" => "File \"{0}\" uploaded.",
+            "File_Required" => "A file must be uploaded",
+            "File_Too_Large" => "File i too large, must be smaller than {0}mb",
         ),
         self::SWEDISH => array(
             "Save_Button" => "Spara",
