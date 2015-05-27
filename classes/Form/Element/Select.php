@@ -21,12 +21,17 @@ class Select extends \Form\Element{
     }
 
     public function IsValid($errorMessage = false){
+        $message = $this->ValidateComparators();
 
-        if($errorMessage && $this->required && empty($this->value)){
-            return array(\Form\String::Get("Field_Empty_Select"));
+        if($this->required && empty($this->value)){
+            $message[] = \Form\String::Get("Field_Empty_Select");
         }
 
-        return !($this->required && empty($this->value));
+        if($errorMessage && count($message)){
+            return $message;
+        }
+
+        return !count($message);
     }
 
     public function GetHTML($data){

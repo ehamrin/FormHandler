@@ -23,7 +23,8 @@ class Input extends \Form\Element{
 	}
 
 	public function IsValid($errorMessage = false){
-		$messages = array();
+
+		$messages = $this->ValidateComparators();
 
 		if($this->required || !empty($this->value)){
 
@@ -56,6 +57,7 @@ class Input extends \Form\Element{
 				}
 			}
 		}
+
 
 
 		$has_error = count($messages);

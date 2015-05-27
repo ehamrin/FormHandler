@@ -20,6 +20,7 @@ abstract class Element {
     protected $formName = "";
     public $required = false;
     public $showRequired = true;
+    public $compareElements = array();
 
     public function __construct($name){
         $this->name = $name;
@@ -32,6 +33,54 @@ abstract class Element {
         }
 
         return !($this->required && empty($this->value));
+    }
+
+    public function ValidateComparators(){
+        $errorMessage = array();
+
+        if(!count($this->compareElements)){
+            return $errorMessage;
+        }
+
+        foreach($this->compareElements as $comparator){
+            $a = $this->value;
+            $b = $comparator["element"]->value;
+
+            switch($comparator["type"]){
+                case Comparator::GREATER_THAN:
+                    if(!($a > $b)){
+                        $errorMessage[] = String::Get("Comparator_Greater_Than", $b);
+                    }
+                    break;
+                case Comparator::GREATER_THAN_EQUAL:
+                    if(!($a >= $b)){
+                        $errorMessage[] = String::Get("Comparator_Greater_Than_Equal", $b);
+                    }
+                    break;
+                case Comparator::LESS_THAN:
+                    if(!($a < $b)){
+                        $errorMessage[] = String::Get("Comparator_Less_Than", $b);
+                    }
+                    break;
+                case Comparator::LESS_THAN_EQUAL:
+                    if(!($a <= $b)){
+                        $errorMessage[] = String::Get("Comparator_Less_Than_Equal", $b);
+                    }
+                    break;
+                case Comparator::EQUALS:
+                    if(!($a == $b)){
+                        $errorMessage[] = String::Get("Comparator_Equals", $b);
+                    }
+                    break;
+                default:
+                    throw new \BadFunctionCallException("Comparator not found");
+                    break;
+
+            }
+
+        }
+
+        return $errorMessage;
     }
 
     public function Sanitize($ignored = array()){
@@ -83,6 +132,16 @@ abstract class Element {
     public function SetValidator($regex){
         $this->validator[] = $regex;
 
+        return $this;
+    }
+
+    public function SetComparator($type, $element){
+        $comparator = array();
+        $comparator["type"] = $type;
+        $comparator["name"] = $element;
+        $comparator["element"] = "";
+
+        $this->compareElements[] = $comparator;
         return $this;
     }
 

@@ -68,6 +68,7 @@ class String {
             "Comparator_Greater_Than_Equal" => "Value must be greater than or equal to {0}",
             "Comparator_Less_Than" => "Value must be less than {0}",
             "Comparator_Less_Than_Equal" => "Value must be less than or equal to {0}",
+            "Comparator_Equals" => "Value must be equal to {0}",
 
             "Field_Empty" => "Field cannot be empty",
             "Field_Empty_Check" => "Must be checked",

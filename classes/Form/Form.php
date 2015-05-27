@@ -125,6 +125,13 @@ HTML;
 
 		$this->inputRepository[$input->name] = $input;
 
+		foreach($input->compareElements as $key => $comparator){
+			if(isset($this->inputRepository[$comparator["name"]])){
+				$input->compareElements[$key]["element"] = $this->inputRepository[$comparator["name"]];
+			}else{
+				throw new \RuntimeException("Input " . $comparator["name"] . " not found and cannot be compared with " . $input->name);
+			}
+		}
 		$input->SetFormName($this->formName);
 
 		$this->inputHTML .= $input->GetHTML($this->GetMethodArray());
@@ -138,46 +145,6 @@ HTML;
 		}
 
 		$this->inputHTML .= '<button name="' . $this->getSaveButtonName() . '" value="1">' . $this->saveText . '</button>';
-
-		return $this;
-	}
-
-	public function AddComparator($a, $type, $b){
-
-		if(!isset($this->inputRepository[$a])){
-			throw new \BadFunctionCallException("Element " . $a . "does not exist in form");
-		}
-		if(!isset($this->inputRepository[$b])){
-			throw new \BadFunctionCallException("Element " . $b . "does not exist in form");
-		}
-		//$value = !empty($this->inputRepository[$b]->prompt) ? $this->inputRepository[$b]->prompt : $this->inputRepository[$b]->value;
-
-		switch($type){
-			case Comparator::GREATER_THAN:
-				if(!($a > $b)){
-					//$this->inputRepository[$a]->AddError(String::Get("Comparator_Greater_Than", $value));
-				}
-				break;
-			case Comparator::GREATER_THAN_EQUAL:
-				if(!($a >= $b)){
-					//$this->inputRepository[$a]->AddError(String::Get("Comparator_Greater_Than_Equal", $value));
-				}
-				break;
-			case Comparator::LESS_THAN:
-				if(!($a < $b)){
-					//$this->inputRepository[$a]->AddError(String::Get("Comparator_Less_Than", $value));
-				}
-				break;
-			case Comparator::LESS_THAN_EQUAL:
-				if(!($a <= $b)){
-					//$this->inputRepository[$a]->AddError(String::Get("Comparator_Less_Than_Equal", $value));
-				}
-				break;
-			default:
-				throw new \BadFunctionCallException("Comparator not found");
-				break;
-
-		}
 
 		return $this;
 	}
