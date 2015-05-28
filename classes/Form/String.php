@@ -80,7 +80,7 @@ class String {
             "File_Uploaded" => "File \"{0}\" uploaded.",
             "File_Required" => "A file must be uploaded",
             "File_Too_Large" => "File is too large, must be smaller than {0}mb",
-            "File_Unvalid_Format" => "File is not in a valid format",
+            "File_Unvalid_Format" => "File is not in a valid format, try a file that ends in {0}",
         ),
         self::SWEDISH => array(
             "Save_Button" => "Spara",
@@ -114,7 +114,7 @@ class String {
             "File_Uploaded" => "Filen \"{0}\" laddades upp.",
             "File_Required" => "En fil måste laddas upp",
             "File_Too_Large" => "Filen får inte vara större än {0}mb",
-            "File_Unvalid_Format" => "Filen är inte i ett giltigt format",
+            "File_Unvalid_Format" => "Filen är inte i ett giltigt format, försök med en fil som slutar på {0}",
         ),
         self::GERMAN => array(
             "Save_Button" => "Speichern",

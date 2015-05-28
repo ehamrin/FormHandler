@@ -22,7 +22,7 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
         ->SetPrompt("End date(greater than first)")
         ->SetValidator(\Form\Validator::DATE)
         ->SetComparator(\Form\Comparator::GREATER_THAN, "first_date")
-    )->AddSubmit();
+    )->AddSubmit("Compare");
 
 if($form->WasSubmitted() && $form->IsValid()){
 

@@ -8,25 +8,39 @@ spl_autoload_register(function ($class) {
 	if(file_exists(dirname(__DIR__) . '/' . $class . '.php')){
 		include dirname(__DIR__) . '/' . $class . '.php';
 	}
-
 });
 
 class Form{
-	
+
 	private $formName;
+
 	private $method;
+
 	private $inputHTML = "";
+
 	private $saveText;
+
 	private $successText = "";
+
 	private $errorText = "";
+
 	private $inputRepository = array();
+
 	private $has_files = false;
+
 	public static $SessionLocation = "FormHandler";
+
 	public static $FileLocation = "FileUpload";
+
 	const SALT = "Ent3r_Y0ur_0Wn_Str!ng_H3r3";
 
 	const SavePadding = "Save_Button";
-	
+
+	/**
+	 * @param string $name
+	 * @param $method
+	 * @throws \ErrorException
+     */
 	public function __construct($name = "FormHandler", $method){
 		$this->formName = $name;
 		$this->method = $method;
@@ -43,7 +57,10 @@ class Form{
 		$this->saveText = String::Get("Save_Button");
 
 	}
-	
+
+	/**
+	 * @return string
+     */
 	public function GenerateOutput(){
 		$message = null;
 
@@ -80,6 +97,10 @@ HTML;
 	}
 
 
+	/**
+	 * @param bool $ignoreSession
+	 * @return array
+     */
 	protected function GetMethodArray($ignoreSession = false){
 		$data = array();
 
@@ -106,32 +127,55 @@ HTML;
 		}
 		return $data;
 	}
-	
+
+	/**
+	 * @param bool $ignoreSession
+	 * @return int
+     */
 	public function WasSubmitted($ignoreSession = false){
 		$data = $this->GetMethodArray($ignoreSession);
 		return count($data);
 	}
 
+	/**
+	 * @return string
+     */
 	protected function GetSaveButtonName(){
 		return $this->formName . '_' . self::SavePadding;
 	}
 
 
+	/**
+	 * @param $string
+	 * @return $this
+     */
 	public function SetButtonText($string){
 		$this->saveText = $string;
 		return $this;
 	}
 
+	/**
+	 * @param $string
+	 * @return $this
+     */
 	public function SetSuccessMessage($string){
 		$this->successText = $string;
 		return $this;
 	}
 
+	/**
+	 * @param $string
+	 * @return $this
+     */
 	public function SetErrorMessage($string){
 		$this->errorText = $string;
 		return $this;
 	}
 
+	/**
+	 * @param Element $input
+	 * @return $this
+     */
 	public function AddInput(Element $input){
 
 		$this->inputRepository[$input->name] = $input;
@@ -150,6 +194,10 @@ HTML;
 		return $this;
 	}
 
+	/**
+	 * @param Element\File $input
+	 * @return $this
+     */
 	public function AddFile(Element\File $input){
 		$this->has_files = true;
 		$this->inputRepository[$input->name] = $input;
@@ -159,6 +207,10 @@ HTML;
 		return $this;
 	}
 
+	/**
+	 * @param string $string
+	 * @return $this
+     */
 	public function AddSubmit($string = ""){
 		if(!empty($string)){
 			$this->saveText = $string;
@@ -170,6 +222,10 @@ HTML;
 	}
 
 
+	/**
+	 * @param $html
+	 * @return $this
+     */
 	public function AddCustomHTML($html){
 
 		$this->inputHTML .= PHP_EOL . $html;
@@ -177,6 +233,9 @@ HTML;
 		return $this;
 	}
 
+	/**
+	 * @return bool
+     */
 	public function IsValid(){
 		foreach ($this->inputRepository as $input){
 			if(!$input->IsValid()){
@@ -187,6 +246,12 @@ HTML;
 		return true;
 	}
 
+	/**
+	 * @param $object
+	 * @param bool $sanitize
+	 * @param array $ignored
+	 * @throws \Exception
+     */
 	public function PopulateObject($object, $sanitize = true, $ignored = array()){
 
 		foreach ($this->inputRepository as $input){
@@ -210,6 +275,12 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param bool $sanitize
+	 * @param array $ignored
+	 * @return \stdClass
+	 * @throws \Exception
+     */
 	public function GetDataAsObject($sanitize = true, $ignored = array()){
 		$object = new \stdClass();
 
@@ -217,7 +288,7 @@ HTML;
 
 		return $object;
 	}
-
+	
 	protected function ClearSession(){
 		if(isset($_SESSION[self::$SessionLocation][$this->formName])){
 			unset($_SESSION[self::$SessionLocation][$this->formName]);

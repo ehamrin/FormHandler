@@ -45,31 +45,32 @@ abstract class Element {
         foreach($this->compareElements as $comparator){
             $a = $this->value;
             $b = $comparator["element"]->value;
+            $message = !empty($b) ? $b : $comparator["element"]->prompt;
 
             switch($comparator["type"]){
                 case Comparator::GREATER_THAN:
                     if(!($a > $b)){
-                        $errorMessage[] = String::Get("Comparator_Greater_Than", $b);
+                        $errorMessage[] = String::Get("Comparator_Greater_Than", $message);
                     }
                     break;
                 case Comparator::GREATER_THAN_EQUAL:
                     if(!($a >= $b)){
-                        $errorMessage[] = String::Get("Comparator_Greater_Than_Equal", $b);
+                        $errorMessage[] = String::Get("Comparator_Greater_Than_Equal", $message);
                     }
                     break;
                 case Comparator::LESS_THAN:
                     if(!($a < $b)){
-                        $errorMessage[] = String::Get("Comparator_Less_Than", $b);
+                        $errorMessage[] = String::Get("Comparator_Less_Than", $message);
                     }
                     break;
                 case Comparator::LESS_THAN_EQUAL:
                     if(!($a <= $b)){
-                        $errorMessage[] = String::Get("Comparator_Less_Than_Equal", $b);
+                        $errorMessage[] = String::Get("Comparator_Less_Than_Equal", $message);
                     }
                     break;
                 case Comparator::EQUALS:
                     if(!($a == $b)){
-                        $errorMessage[] = String::Get("Comparator_Equals", $b);
+                        $errorMessage[] = String::Get("Comparator_Equals", $message);
                     }
                     break;
                 default:

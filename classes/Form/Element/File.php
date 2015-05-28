@@ -28,13 +28,26 @@ class File extends \Form\Element{
             }
 
             $validMime = false;
+            $messageString = array();
             foreach($this->validMime as $mime){
                 if($this->file_type == $mime){
                     $validMime = true;
                 }
+                $ext = explode('/', $mime);
+                $ext = end($ext);
+                $messageString[] = "'." . $ext . "'";
             }
+
             if(!$validMime){
-                $messages[] = \Form\String::Get("File_Unvalid_Format");
+                $string = "";
+                $end = "";
+                if(count($messageString > 1)){
+                    $end = ' or ' . array_pop($messageString);
+                }
+
+                $messageString = implode(', ', $messageString) . $end;
+
+                $messages[] = \Form\String::Get("File_Unvalid_Format", $messageString);
             }
         }
 
