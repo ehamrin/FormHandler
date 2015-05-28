@@ -37,7 +37,14 @@ $form = (new Form\Form("FileForm", Form\Method::POST))
 </head>
 <body>
 <h1>Upload form</h1>
-<nav><li><a href="index.php">Default</a></li><li><a href="example-swedish.php">Default(Swedish)</a></li><li><a href="example-login.php">Login form example</a></li><li><a href="example-file.php">File upload example</a></li></nav>
+<nav>
+    <li><a href="index.php">Default</a></li>
+    <li><a href="example-swedish.php">Default(Swedish)</a></li>
+    <li><a href="example-login.php">Login form example</a></li>
+    <li><a href="example-file.php">File upload example</a></li>
+    <li><a href="example-comparator.php">Field comparator example</a></li>
+</nav>
+
 <?php
     if($form->wasSubmitted() && $form->isValid()){
         $obj = $form->GetDataAsObject();

@@ -43,8 +43,14 @@ if($form->WasSubmitted() && $form->IsValid()){
 </head>
 <body>
 
-<h1>My form wrapper</h1>
-<nav><li><a href="index.php">Default</a></li><li><a href="example-swedish.php">Default(Swedish)</a></li><li><a href="example-login.php">Login form example</a></li></nav>
+<h1>Comparators</h1>
+<nav>
+    <li><a href="index.php">Default</a></li>
+    <li><a href="example-swedish.php">Default(Swedish)</a></li>
+    <li><a href="example-login.php">Login form example</a></li>
+    <li><a href="example-file.php">File upload example</a></li>
+    <li><a href="example-comparator.php">Field comparator example</a></li>
+</nav>
 
 <?php echo $form->GenerateOutput(); ?>
 </body>
