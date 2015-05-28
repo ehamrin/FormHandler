@@ -8,19 +8,24 @@ session_start();
 $form = (new Form\Form("FileForm", Form\Method::POST))
     ->SetSuccessMessage("Hooray")
     ->SetErrorMessage("Ooops. Check errors and try again")
+
+    ->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "name"))
+        ->SetPlaceholder("Firstname Lastname")
+        ->SetPrompt("Full name")
+    )
     ->AddFile((new Form\Element\File("fileUpload"))
         ->SetPrompt("Logo")
         ->SetRequired(true)
-        ->SetMaxSize(1)
-    )->AddFile((new Form\Element\File("fileUpload2"))
-        ->SetPrompt("Logo")
-        ->SetRequired(true)
-        ->SetMaxSize(1)
+        ->SetMaxSize(1.5)
+        ->SetFileType(
+            \Form\Element\FileType::JPG,
+            \Form\Element\FileType::PNG
+        )
     )
+    ->AddCustomHTML('<div class="small">
+					File is required and max size is set in mb, currently set to 1. Valid file types are set to JPG and PNG</a>
+					</div>')
     ->AddSubmit("Upload");
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -31,21 +36,20 @@ $form = (new Form\Form("FileForm", Form\Method::POST))
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<h1>Login form</h1>
+<h1>Upload form</h1>
+<nav><li><a href="index.php">Default</a></li><li><a href="example-swedish.php">Default(Swedish)</a></li><li><a href="example-login.php">Login form example</a></li><li><a href="example-file.php">File upload example</a></li></nav>
 <?php
-if($form->wasSubmitted() && $form->isValid()){
-//This would be were you set you session data and redirect the user
+    if($form->wasSubmitted() && $form->isValid()){
+        $obj = $form->GetDataAsObject();
+        echo '<pre>';
+        echo 'File name:' . $obj->fileUpload->name . '</br>';
+        echo 'File size:' . $obj->fileUpload->size . '</br>';
+        echo 'Image (returned as base64-encoded string): <img src="data: ' . $obj->fileUpload->type . ';base64,' . $obj->fileUpload->data . '" width="150px" alt="' . $obj->fileUpload->name . '"/>';
+        echo '</pre>';
+    }
 
-    $obj = $form->GetDataAsObject();
-    echo '<h2>' . $obj->fileUpload->name . '</h2>';
-    echo '<h2>' . $obj->fileUpload->size . '</h2>';
-    echo '<img src="data: ' . $obj->fileUpload->type . ';base64,' . $obj->fileUpload->data . '" width="150px" alt="' . $obj->fileUpload->name . '"/>';
-    echo '<img src="data: ' . $obj->fileUpload2->type . ';base64,' . $obj->fileUpload2->data . '" width="150px" alt="' . $obj->fileUpload2->name . '"/>';
-
-}
+    echo $form->GenerateOutput();
 ?>
-<nav><li><a href="index.php">Default</a></li><li><a href="example-swedish.php">Default(Swedish)</a></li><li><a href="example-login.php">Login form example</a></li></nav>
-<?php echo $form->GenerateOutput(); ?>
 </body>
 </html>
 

@@ -79,7 +79,8 @@ class String {
 
             "File_Uploaded" => "File \"{0}\" uploaded.",
             "File_Required" => "A file must be uploaded",
-            "File_Too_Large" => "File i too large, must be smaller than {0}mb",
+            "File_Too_Large" => "File is too large, must be smaller than {0}mb",
+            "File_Unvalid_Format" => "File is not in a valid format",
         ),
         self::SWEDISH => array(
             "Save_Button" => "Spara",
@@ -97,12 +98,23 @@ class String {
             "Validator_Credit_Card" => "Inte ett giltigt kreditkort",
             "Validator_Default" => "Fel format",
 
+            "Comparator_Greater_Than" => "Värdet måste vara större än {0}",
+            "Comparator_Greater_Than_Equal" => "Värdet måste vara större än eller lika med {0}",
+            "Comparator_Less_Than" => "Värdet måste vara mindre än  {0}",
+            "Comparator_Less_Than_Equal" => "Värdet måste vara mindre än eller lika med {0}",
+            "Comparator_Equals" => "Värdet måste vara lika med {0}",
+
             "Field_Empty" => "Fältet får inte vara tomt",
             "Field_Empty_Check" => "Måste vara ikryssad",
             "Field_Empty_Select" => "Du måste välja ett alternativ",
             "Field_Short" => "Måste vara kortare än {0} tecken",
             "Field_Long" => "Måste vara längre än {0} tecken",
             "Field_Range" => "Måste vara mellan {0} och {1}",
+
+            "File_Uploaded" => "Filen \"{0}\" laddades upp.",
+            "File_Required" => "En fil måste laddas upp",
+            "File_Too_Large" => "Filen får inte vara större än {0}mb",
+            "File_Unvalid_Format" => "Filen är inte i ett giltigt format",
         ),
         self::GERMAN => array(
             "Save_Button" => "Speichern",

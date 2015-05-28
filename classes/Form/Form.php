@@ -3,18 +3,13 @@
 
 namespace Form;
 
-include 'Method.php';
-include 'Validator.php';
-include 'String.php';
-include 'Comparator.php';
-include 'Element/InputType.php';
-include 'Element.php';
-include 'Element/Input.php';
-include 'Element/Textarea.php';
-include 'Element/Select.php';
-include 'Element/Checkbox.php';
-include 'Element/RadioGroup.php';
+spl_autoload_register(function ($class) {
+	$class = str_replace("\\", "/", $class);
+	if(file_exists(dirname(__DIR__) . '/' . $class . '.php')){
+		include dirname(__DIR__) . '/' . $class . '.php';
+	}
 
+});
 
 class Form{
 	
@@ -25,7 +20,9 @@ class Form{
 	private $successText = "";
 	private $errorText = "";
 	private $inputRepository = array();
+	private $has_files = false;
 	public static $SessionLocation = "FormHandler";
+	public static $FileLocation = "FileUpload";
 	const SALT = "Ent3r_Y0ur_0Wn_Str!ng_H3r3";
 
 	const SavePadding = "Save_Button";
@@ -55,7 +52,6 @@ class Form{
 				if(!empty($this->successText)) {
 					$message = '<p class="success">' . $this->successText . '</p>';
 				}
-				$this->ClearSession();
 
 			}else if(!$this->isValid() && !empty($this->errorText)){
 
@@ -64,10 +60,17 @@ class Form{
 			}
 
 		}
+		$enctype = "";
+
+		if($this->has_files){
+			$enctype = 'enctype="multipart/form-data"';
+		}
+
+		$this->ClearSession();
 
 		return <<<HTML
 
-	<form method="{$this->method}" id="{$this->formName}">
+	<form action="" method="{$this->method}" id="{$this->formName}" {$enctype}>
 			{$message}
 			{$this->inputHTML}
 
@@ -78,31 +81,39 @@ HTML;
 
 
 	protected function GetMethodArray($ignoreSession = false){
+		$data = array();
 
 		if(isset($_SESSION[self::$SessionLocation][$this->formName]) && $ignoreSession == false){
 
-			return 	$_SESSION[self::$SessionLocation][$this->formName];
+			$data = $_SESSION[self::$SessionLocation][$this->formName];
 
 		}else if($this->method == Method::POST && isset($_POST[$this->formName])){
 
-			return $_POST[$this->formName];
+			$data = $_POST[$this->formName];
 
 		}else if($this->method == Method::GET && isset($_GET[$this->formName])){
 
-			return $_GET[$this->formName];
+			$data = $_GET[$this->formName];
 
-		}else{
-			return array();
 		}
+		$files = $_FILES;
+		if(count($files)){
+			foreach($files as $key => $file){
+				$files[$key]["file_data"] = base64_encode(file_get_contents($file['tmp_name']));
+				unset($file['tmp_name']);
+			}
+			$data[self::$FileLocation] = $files;
+		}
+		return $data;
 	}
 	
 	public function WasSubmitted($ignoreSession = false){
 		$data = $this->GetMethodArray($ignoreSession);
-		return isset($data[self::SavePadding]);
+		return count($data);
 	}
 
 	protected function GetSaveButtonName(){
-		return $this->formName . '[' . self::SavePadding . ']';
+		return $this->formName . '_' . self::SavePadding;
 	}
 
 
@@ -134,6 +145,15 @@ HTML;
 		}
 		$input->SetFormName($this->formName);
 
+		$this->inputHTML .= $input->GetHTML($this->GetMethodArray());
+
+		return $this;
+	}
+
+	public function AddFile(Element\File $input){
+		$this->has_files = true;
+		$this->inputRepository[$input->name] = $input;
+		$input->SetFormName($this->formName);
 		$this->inputHTML .= $input->GetHTML($this->GetMethodArray());
 
 		return $this;
@@ -176,8 +196,12 @@ HTML;
 					if($sanitize){
 						$input->Sanitize($ignored);
 					}
-					$object->{$input->name} = $input->value;
 
+					if($input instanceof Element\File){
+						$object->{$input->name} = $input->GetFileData();
+					}else{
+						$object->{$input->name} = $input->value;
+					}
 				}else{
 
 					throw new \Exception("Form/Controller::PopulateObject() - An unvalid input was discovered");
