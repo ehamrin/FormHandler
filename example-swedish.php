@@ -107,17 +107,26 @@ if($form->WasSubmitted() && $form->IsValid()){
 </head>
 <body>
 
-<h1>My form wrapper</h1>
-<nav>
-    <li><a href="index.php">Default</a></li>
-    <li><a href="example-swedish.php">Swedish form</a></li>
-    <li><a href="example-login.php">Login form example</a></li>
-    <li><a href="example-file.php">File upload example</a></li>
-    <li><a href="example-comparator.php">Field comparator example</a></li>
-</nav>
-<?php echo $form->GenerateOutput(); ?>
+    <h1>My form wrapper</h1>
+    <nav>
+        <li><a href="index.php">Default</a></li>
+        <li><a href="example-swedish.php">Swedish form</a></li>
+        <li><a href="example-login.php">Login form example</a></li>
+        <li><a href="example-file.php">File upload example</a></li>
+        <li><a href="example-comparator.php">Field comparator example</a></li>
+    </nav>
 
-<div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
+
+    <?php echo $form->GenerateOutput(); ?>
+
+    <div class="gist">
+        <h2>Source code</h2>
+        <span><em>(<a href="http://gist-it.appspot.com/">http://gist-it.appspot.com/</a>)</em></span>
+        <script src="http://gist-it.appspot.com/https://github.com/ehamrin/FormHandler/blob/master/example-swedish.php?footer=0"></script>
+    </div>
+
+    <div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">See it on GitHub!</a></div>
+
 </body>
 </html>
 

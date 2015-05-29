@@ -115,9 +115,19 @@ if($form->WasSubmitted() && $form->IsValid()){
 		<li><a href="example-comparator.php">Field comparator example</a></li>
 	</nav>
 
+
 	<?php echo $form->GenerateOutput(); ?>
+
+
 	<nav><li><a href="?lang=<?php echo \Form\String::ENGLISH; ?>">English</a></li><li><a href="?lang=<?php echo \Form\String::SWEDISH; ?>">Swedish</a></li><li><a href="?lang=<?php echo \Form\String::GERMAN; ?>">German</a></li></nav>
-	<div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
+
+	<div class="gist">
+		<h2>Source code</h2>
+		<span><em>(<a href="http://gist-it.appspot.com/">http://gist-it.appspot.com/</a>)</em></span>
+		<script src="http://gist-it.appspot.com/https://github.com/ehamrin/FormHandler/blob/master/index.php?footer=0"></script>
+	</div>
+
+	<div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">See it on GitHub!</a></div>
 </body>
 </html>
 

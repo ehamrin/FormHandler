@@ -62,7 +62,15 @@ if($form->wasSubmitted() && $form->isValid()){
 
     <?php echo $form->GenerateOutput(); ?>
 
-    <div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
+    <div class="gist">
+        <h2>Source code</h2>
+        <span><em>(<a href="http://gist-it.appspot.com/">http://gist-it.appspot.com/</a>)</em></span>
+        <script src="http://gist-it.appspot.com/https://github.com/ehamrin/FormHandler/blob/master/example-file.php?footer=0"></script>
+    </div>
+
+    <div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">See it on GitHub!</a></div>
+
+
 </body>
 </html>
 

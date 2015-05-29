@@ -185,3 +185,16 @@ button:hover{
     background-color: #fff;
     color: #66e155;
 }
+
+
+.gist > h2{
+    margin-bottom: 5px;
+}
+.gist > h2, .gist > span{
+    display: block;
+    text-align: center;
+}
+.gist .gist-it-gist{
+    width: 800px;
+    margin: 10px auto;
+}
