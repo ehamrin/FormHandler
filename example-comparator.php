@@ -2,9 +2,9 @@
 include 'classes/Form/Form.php';
 session_start();
 
-if(isset($_GET['lang'])){
-    \Form\String::SetLanguage($_GET['lang']);
-}
+
+\Form\String::SetLanguage(\Form\String::ENGLISH);
+
 
 
 
@@ -40,6 +40,7 @@ if($form->WasSubmitted() && $form->IsValid()){
     <meta charset="UTF-8">
     <title>Example form</title>
     <link href="style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 <body>
 
@@ -52,7 +53,10 @@ if($form->WasSubmitted() && $form->IsValid()){
     <li><a href="example-comparator.php">Field comparator example</a></li>
 </nav>
 
-<?php echo $form->GenerateOutput(); ?>
+<?php
+    echo $form->GenerateOutput();
+    echo $form->GenerateJavaScript();
+?>
 <div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
 </body>
 </html>

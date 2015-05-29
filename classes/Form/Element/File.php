@@ -84,12 +84,13 @@ class File extends \Form\Element{
         }
 
         $errormessage = $this->GetErrorMessageHTML($data);
+        $required = $this->required ? ' data-required="true"' : '';
 
         return <<<HTML
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="file" name="{$this->hashed_name}"/>{$this->GetRequiredHTML()}
+				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="file" name="{$this->hashed_name}" {$required}/>{$this->GetRequiredHTML()}
 				{$errormessage}
 			</div>
 HTML;

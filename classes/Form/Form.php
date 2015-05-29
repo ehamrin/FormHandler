@@ -309,20 +309,94 @@ HTML;
 				return '<li>' + string + '</li>'
 			};
 
-			var validateForm = function(){
-				form = $('.form-wrapper');
+			var validateForm = function(showMessage){
+				var form = $('.form-wrapper');
+
 				form.find('p.error').remove();
+				form.find('p.success').remove();
+
+				var inputs = form.find('input');
+				for(var i = 0; i < inputs.length; i++){
+					validateInput(form.find('input')[i]);
+				}
 
 				if(form.find('.form-group-error').length > 0){
-					if(ErrorMessage != ""){
+					if(ErrorMessage != "" && showMessage === true){
 						form.prepend('<p class="error">' + ErrorMessage + '</p>');
 					}
 					return false;
 				}
+
 				return true;
 			};
-			var validateInput = function(){
-				var element = $(this);
+
+			var validateComparator = function(element){
+					var errors = "";
+					var compareToInitial;
+					var compareTo;
+					var thisValue;
+
+					var setComparatorValues = function(compareElement){
+						compareToInitial = compareElement.val();
+						compareTo = compareElement.val();
+						if(!isNaN(Date.parse(compareTo))){
+							compareTo = Date.parse(compareTo);
+						}
+
+						thisValue = element.val();
+						if(!isNaN(Date.parse(thisValue))){
+							thisValue = Date.parse(thisValue);
+						}
+					};
+
+
+					if(element.data("greater-than")){
+						setComparatorValues($('#' + element.data("greater-than")));
+
+						if(!(thisValue > compareTo) || compareTo == ""){
+							errors += GenerateErrorString(Messages["Comparator_Greater_Than"].replace('{0}', compareToInitial));
+						}
+					}
+
+					if(element.data("greater-than-equal")){
+						setComparatorValues($('#' + element.data("greater-than-equal")));
+
+						if(!(thisValue >= compareTo) || compareTo == ""){
+							errors += GenerateErrorString(Messages["Comparator_Greater_Than_Equal"].replace('{0}', compareToInitial));
+						}
+					}
+
+					if(element.data("less-than")){
+						setComparatorValues($('#' + element.data("less-than")));
+
+						if(!(thisValue < compareTo) || compareTo == ""){
+							errors += GenerateErrorString(Messages["Comparator_Less_Than"].replace('{0}', compareToInitial));
+						}
+					}
+
+					if(element.data("less-than-equal")){
+						setComparatorValues($('#' + element.data("less-than-equal")));
+
+						if(!(thisValue <= compareTo) || compareTo == ""){
+							errors += GenerateErrorString(Messages["Comparator_Less_Than_Equal"].replace('{0}', compareToInitial));
+						}
+					}
+
+					if(element.data("equals")){
+						setComparatorValues($('#' + element.data("equals")));
+
+						if(!(thisValue == compareTo) || compareTo == ""){
+							errors += GenerateErrorString(Messages["Comparator_Equals"].replace('{0}', compareToInitial));
+						}
+					}
+
+					return errors;
+			};
+
+			var validateInput = function(element){
+
+				element = $(element);
+
 				var errors = "";
 				element.parent().find(".form-group-error").remove();
 
@@ -344,23 +418,32 @@ HTML;
 							}
 						});
 					}
+
+
 				}
+
+				errors += validateComparator(element);
 
 				if(errors != ""){
 					element.parent().append('<ul class="form-group-error">' + errors + '</ul>');
 					element.addClass("error");
 				}else{
 					element.removeClass("error");
-					validateForm();
 				}
 			};
 
-			$('.form-group input').on("change", validateInput).blur(validateInput).click(validateInput);
+
+
+			var validateInputEvent = function(){
+				validateInput(this);
+			};
+			$('.form-group input').on("change", validateInputEvent).blur(validateInputEvent);
 
 			$('.form-wrapper').submit(function(e){
-				if(validateForm() == false){
+				if(validateForm(true) == false){
 					e.preventDefault();
 				}
+
 			})
 
 		});

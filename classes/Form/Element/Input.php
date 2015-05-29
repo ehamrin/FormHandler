@@ -97,13 +97,13 @@ class Input extends \Form\Element{
 		}
 
 		$validators = implode(',', $validators);
-		$validators = !empty($validators) ? ' data-validators="' . $validators . '"': '';
-
+		$validators = !empty($validators) ? ' data-validators="' . $validators . '" ': '';
+		$validators .= $this->GetComparatorAsDataAttr();
 		return <<<HTML
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>{$this->GetRequiredHTML()}
+				<input id="{$this->hashed_name}" {$this->GetComparatorAsDataAttr()} class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>{$this->GetRequiredHTML()}
 				{$errormessage}
 			</div>
 HTML;

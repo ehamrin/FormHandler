@@ -24,7 +24,7 @@ $form = (new Form\Form("FileForm", Form\Method::POST))
         )
     )
     ->AddCustomHTML('<div class="small">
-					File is required and max size is set in mb, currently set to 1,5. Valid file types are set to JPG, PNG and GIF</a>
+					File is required and max size is set in mb, currently set to 1,5. Valid file types are set to JPG, PNG and GIF
 					</div>')
     ->AddSubmit("Upload");
 ?>
@@ -35,6 +35,7 @@ $form = (new Form\Form("FileForm", Form\Method::POST))
     <meta charset="UTF-8">
     <title>Upload example</title>
     <link href="style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 <body>
 
@@ -60,6 +61,7 @@ if($form->wasSubmitted() && $form->isValid()){
 
 <?php
     echo $form->GenerateOutput();
+    echo $form->GenerateJavaScript();
 ?>
 <div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
 </body>

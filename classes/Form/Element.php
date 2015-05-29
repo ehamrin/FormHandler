@@ -84,6 +84,48 @@ abstract class Element {
         return $errorMessage;
     }
 
+    public function GetComparatorAsDataAttr(){
+        $string = array();
+
+        if(!count($this->compareElements)){
+            return "";
+        }
+
+        foreach($this->compareElements as $comparator){
+            $compare = "";
+
+            switch($comparator["type"]){
+                case Comparator::GREATER_THAN:
+                    $compare = 'data-greater-than';
+                    break;
+                case Comparator::GREATER_THAN_EQUAL:
+                    $compare = 'data-greater-than-equal';
+                    break;
+                case Comparator::LESS_THAN:
+                    $compare = 'data-less-than';
+                    break;
+                case Comparator::LESS_THAN_EQUAL:
+                    $compare = 'data-less-than-equal';
+                    break;
+                case Comparator::EQUALS:
+                    $compare = 'data-equals';
+                    break;
+                default:
+                    throw new \BadFunctionCallException("Comparator not found");
+                    break;
+
+            }
+
+            if(!empty($compare)){
+                $string[] = $compare . '="' . $comparator["element"]->hashed_name . '"';
+
+            }
+
+        }
+        return implode(' ', $string);
+
+    }
+
     public function Sanitize($ignored = array()){
 
         if(property_exists($this, "type") && $this->type == \Form\Element\InputType::Password){
