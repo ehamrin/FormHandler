@@ -347,6 +347,11 @@ HTML;
 						if(!isNaN(Date.parse(thisValue))){
 							thisValue = Date.parse(thisValue);
 						}
+
+						if(compareToInitial == ""){
+
+							compareToInitial = compareElement.siblings('label').html();
+						}
 					};
 
 
