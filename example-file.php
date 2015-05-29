@@ -33,9 +33,10 @@ $form = (new Form\Form("FileForm", Form\Method::POST))
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Upload example</title>
+    <title>Form Wrapper and Validator</title>
     <link href="style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <?php echo $form->GenerateJavaScript(); ?>
 </head>
 <body>
 
@@ -50,20 +51,18 @@ if($form->wasSubmitted() && $form->isValid()){
 }
 ?>
 
-<h1>Upload form</h1>
-<nav>
-    <li><a href="index.php">Default</a></li>
-    <li><a href="example-swedish.php">Swedish form</a></li>
-    <li><a href="example-login.php">Login form example</a></li>
-    <li><a href="example-file.php">File upload example</a></li>
-    <li><a href="example-comparator.php">Field comparator example</a></li>
-</nav>
+    <h1>Upload form</h1>
+    <nav>
+        <li><a href="index.php">Default</a></li>
+        <li><a href="example-swedish.php">Swedish form</a></li>
+        <li><a href="example-login.php">Login form example</a></li>
+        <li><a href="example-file.php">File upload example</a></li>
+        <li><a href="example-comparator.php">Field comparator example</a></li>
+    </nav>
 
-<?php
-    echo $form->GenerateOutput();
-    echo $form->GenerateJavaScript();
-?>
-<div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
+    <?php echo $form->GenerateOutput(); ?>
+
+    <div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
 </body>
 </html>
 

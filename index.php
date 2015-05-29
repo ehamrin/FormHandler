@@ -99,9 +99,10 @@ if($form->WasSubmitted() && $form->IsValid()){
 <html>
 <head lang="en">
 	<meta charset="UTF-8">
-	<title>Example form</title>
+	<title>Form Wrapper and Validator</title>
 	<link href="style.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<?php echo $form->GenerateJavaScript(); ?>
 </head>
 <body>
 
@@ -114,10 +115,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 		<li><a href="example-comparator.php">Field comparator example</a></li>
 	</nav>
 
-
-
 	<?php echo $form->GenerateOutput(); ?>
-	<?php echo $form->GenerateJavaScript(); ?>
 	<nav><li><a href="?lang=<?php echo \Form\String::ENGLISH; ?>">English</a></li><li><a href="?lang=<?php echo \Form\String::SWEDISH; ?>">Swedish</a></li><li><a href="?lang=<?php echo \Form\String::GERMAN; ?>">German</a></li></nav>
 	<div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
 </body>
