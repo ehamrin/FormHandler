@@ -19,15 +19,42 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
     )
     ->AddInput((new Form\Element\Input(Form\Element\InputType::Date, "second_date"))
         ->SetPlaceholder("YYYY-MM-DD")
-        ->SetPrompt("End date(greater than first)")
+        ->SetPrompt("End date(greater than Start Date)")
         ->SetValidator(\Form\Validator::DATE)
         ->SetComparator(\Form\Comparator::GREATER_THAN, "first_date")
-    )->AddSubmit("Compare");
+    )
+
+    ->AddSubmit("Compare");
 
 if($form->WasSubmitted() && $form->IsValid()){
 
     echo '<pre>';
     var_dump($form->GetDataAsObject());
+    echo '</pre>';
+
+}
+
+$form2 = (new Form\Form("MyForm2", Form\Method::POST))
+    ->SetSuccessMessage("You successfully submitted the form")
+    ->SetErrorMessage("You submitted the form, but there were errors validating.")
+
+    ->AddInput((new Form\Element\Input(Form\Element\InputType::Date, "first_num"))
+        ->SetPlaceholder("Number 1")
+        ->SetPrompt("Start number")
+        ->SetValidator(\Form\Validator::FLOAT)
+    )
+    ->AddInput((new Form\Element\Input(Form\Element\InputType::Date, "second_num"))
+        ->SetPlaceholder("Number 2")
+        ->SetPrompt("End number(greater than Start number)")
+        ->SetValidator(\Form\Validator::FLOAT)
+        ->SetComparator(\Form\Comparator::GREATER_THAN, "first_num")
+    )
+    ->AddSubmit("Compare");
+
+if($form2->WasSubmitted() && $form2->IsValid()){
+
+    echo '<pre>';
+    var_dump($form2->GetDataAsObject());
     echo '</pre>';
 
 }
@@ -55,6 +82,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 
 <?php
     echo $form->GenerateOutput();
+    echo $form2->GenerateOutput();
     echo $form->GenerateJavaScript();
 ?>
 <div class="source-code"><a href="https://github.com/ehamrin/FormHandler" target="_blank">Source code</a></div>
