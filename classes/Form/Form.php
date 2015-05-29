@@ -87,7 +87,7 @@ class Form{
 
 		return <<<HTML
 
-	<form action="" method="{$this->method}" id="{$this->formName}" {$enctype}>
+	<form action="" method="{$this->method}" id="{$this->formName}" class="form-wrapper" {$enctype}>
 			{$message}
 			{$this->inputHTML}
 
@@ -288,11 +288,85 @@ HTML;
 
 		return $object;
 	}
-	
+
 	protected function ClearSession(){
 		if(isset($_SESSION[self::$SessionLocation][$this->formName])){
 			unset($_SESSION[self::$SessionLocation][$this->formName]);
 		}
+	}
+
+	public function GenerateJavaScript(){
+		$errormessages = json_encode(String::GetCurrentLanguageStrings(), JSON_PRETTY_PRINT);
+		$regex = json_encode(Validator::GetAsArray(), JSON_PRETTY_PRINT);
+		return <<<JS
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			var Messages = {$errormessages};
+			var Validator = {$regex};
+			var ErrorMessage = '{$this->errorText}';
+			var GenerateErrorString = function(string){
+				return '<li>' + string + '</li>'
+			};
+
+			var validateForm = function(){
+				form = $('.form-wrapper');
+				form.find('p.error').remove();
+
+				if(form.find('.form-group-error').length > 0){
+					if(ErrorMessage != ""){
+						form.prepend('<p class="error">' + ErrorMessage + '</p>');
+					}
+					return false;
+				}
+				return true;
+			};
+			var validateInput = function(){
+				var element = $(this);
+				var errors = "";
+				element.parent().find(".form-group-error").remove();
+
+				if(element.data("required") || element.val() != ""){
+
+					if(element.val() == ""  || element.attr("type") == "checkbox" && !element.is(':checked')){
+						errors += GenerateErrorString(Messages["Field_Empty"]);
+					}
+
+					if(element.data("validators")){
+						var validator = element.data("validators").toString().split(',');
+
+						validator.forEach(function(index){
+							var regex = Validator[index]['regex'].substring(1, Validator[index]['regex'].length-1);
+							regex = new RegExp(regex);
+
+							if(element.val().match(regex) == null){
+								errors += GenerateErrorString(Validator[index]['message']);
+							}
+						});
+					}
+				}
+
+				if(errors != ""){
+					element.parent().append('<ul class="form-group-error">' + errors + '</ul>');
+					element.addClass("error");
+				}else{
+					element.removeClass("error");
+					validateForm();
+				}
+			};
+
+			$('.form-group input').on("change", validateInput).blur(validateInput).click(validateInput);
+
+			$('.form-wrapper').submit(function(e){
+				if(validateForm() == false){
+					e.preventDefault();
+				}
+			})
+
+		});
+	</script>
+JS;
+
 	}
 
 }

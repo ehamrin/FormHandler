@@ -74,4 +74,29 @@ class Validator {
                 return String::Get("Validator_Default");
         }
     }
+
+    public static function GetAsArray(){
+        return array(
+            "1" => array("regex" => self::SWEDISH_PID, "message" => self::ErrorMessage(self::SWEDISH_PID)),
+            "2" => array("regex" => self::US_SOCIAL_SECURITY, "message" => self::ErrorMessage(self::US_SOCIAL_SECURITY)),
+            "3" => array("regex" => self::SWEDISH_POSTAL_CODE, "message" => self::ErrorMessage(self::SWEDISH_POSTAL_CODE)),
+            "4" => array("regex" => self::EMAIL, "message" => self::ErrorMessage(self::EMAIL)),
+            "5" => array("regex" => self::INT, "message" => self::ErrorMessage(self::INT)),
+            "6" => array("regex" => self::FLOAT, "message" => self::ErrorMessage(self::FLOAT)),
+            "7" => array("regex" => self::DATE, "message" => self::ErrorMessage(self::DATE)),
+            "8" => array("regex" => self::HEXA_DECIMAL, "message" => self::ErrorMessage(self::HEXA_DECIMAL)),
+            "9" => array("regex" => self::URL, "message" => self::ErrorMessage(self::URL)),
+            "10" => array("regex" => self::IP_ADDRESS, "message" => self::ErrorMessage(self::IP_ADDRESS)),
+            "11" => array("regex" => self::CREDIT_CARD, "message" => self::ErrorMessage(self::CREDIT_CARD))
+        );
+    }
+
+    public static function GetPositionInArray($regex){
+        foreach(self::GetAsArray() as $key => $value){
+            if($regex == $value["regex"]){
+                return $key;
+            }
+        }
+        return null;
+    }
 }

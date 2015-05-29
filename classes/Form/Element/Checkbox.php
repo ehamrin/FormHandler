@@ -48,11 +48,12 @@ class Checkbox extends \Form\Element{
 
         $errormessage = $this->GetErrorMessageHTML($data);
         $checked = $this->value == 'on' ? 'checked="checked"' : '' ;
+        $required = $this->required ? ' data-required="true"' : '';
         return <<<HTML
 
             <div class="form-group">
                 {$this->GetLabelHTML()}
-                <input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked/>{$this->GetRequiredHTML()}
+                <input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked {$required}/>{$this->GetRequiredHTML()}
                 {$errormessage}
             </div>
 

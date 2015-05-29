@@ -47,6 +47,16 @@ class String {
         $_SESSION[Form::$SessionLocation][self::SESSION_LOCATION] = $string;
     }
 
+    public static function GetCurrentLanguageStrings(){
+        $lang = self::ENGLISH;
+
+        if(isset($_SESSION[Form::$SessionLocation][self::SESSION_LOCATION]) && !empty($_SESSION[Form::$SessionLocation][self::SESSION_LOCATION])){
+            $lang = $_SESSION[Form::$SessionLocation][self::SESSION_LOCATION];
+        }
+
+        return self::$strings[$lang];
+    }
+
     private static $strings = array(
         self::ENGLISH => array(
             "Save_Button" => "Save",

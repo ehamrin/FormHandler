@@ -88,11 +88,22 @@ class Input extends \Form\Element{
 
 		$errormessage = $this->GetErrorMessageHTML($data);
 
+		$required = $this->required ? ' data-required="true"' : '';
+
+		$validators = array();
+
+		foreach($this->validator as $regex){
+			$validators[] = Validator::GetPositionInArray($regex);
+		}
+
+		$validators = implode(',', $validators);
+		$validators = !empty($validators) ? ' data-validators="' . $validators . '"': '';
+
 		return <<<HTML
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}"/>{$this->GetRequiredHTML()}
+				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>{$this->GetRequiredHTML()}
 				{$errormessage}
 			</div>
 HTML;
