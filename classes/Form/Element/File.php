@@ -66,14 +66,7 @@ class File extends \Form\Element{
         return !$has_error;
     }
 
-
-    /*****************************
-     *
-     *     HTML Generators
-     *
-     ****************************/
-    public function GetHTML($data)
-    {
+    public function UpdateValue($data){
         //Was the data posted?
         if (isset($data[\Form\Form::$FileLocation][$this->hashed_name])) {
             $file = $data[\Form\Form::$FileLocation][$this->hashed_name];
@@ -82,15 +75,24 @@ class File extends \Form\Element{
             $this->file_data = $file['file_data'];
             $this->file_size = $file['size'];
         }
+    }
 
-        $errormessage = $this->GetErrorMessageHTML($data);
+    /*****************************
+     *
+     *     HTML Generators
+     *
+     ****************************/
+    public function GetHTML()
+    {
+
+        $errormessage = $this->GetErrorMessageHTML();
         $required = $this->required ? ' data-required="true"' : '';
 
         return <<<HTML
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="file" name="{$this->hashed_name}" {$required}/>{$this->GetRequiredHTML()}
+				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="file" name="{$this->hashed_name}" {$required}/>
 				{$errormessage}
 			</div>
 HTML;

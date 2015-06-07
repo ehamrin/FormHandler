@@ -49,20 +49,16 @@ class Textarea extends \Form\Element{
      *     HTML Generators
      *
      ****************************/
-    public function GetHTML($data)
+    public function GetHTML()
     {
-        //Was the data posted?
-        if (isset($data[$this->hashed_name])) {
-            $this->value = $data[$this->hashed_name];
-        }
 
-        $errormessage = $this->GetErrorMessageHTML($data);
+        $errormessage = $this->GetErrorMessageHTML();
 
         return <<<HTML
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<textarea id="{$this->hashed_name}" class="{$this->GetClassString()}" maxlength="{$this->maxLength}" placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]">{$this->value}</textarea>{$this->GetRequiredHTML()}
+				<textarea id="{$this->hashed_name}" class="{$this->GetClassString()}" maxlength="{$this->maxLength}" placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]">{$this->value}</textarea>
 				{$errormessage}
 			</div>
 HTML;

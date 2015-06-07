@@ -24,7 +24,7 @@ class Form{
 
 	private $errorText = "";
 
-	private $inputRepository = array();
+	public $inputRepository = array();
 
 	private $has_files = false;
 
@@ -77,10 +77,17 @@ class Form{
 			}
 
 		}
-		$enctype = "";
+		$enctype = $this->has_files ? 'enctype="multipart/form-data"' : '' ;
 
-		if($this->has_files){
-			$enctype = 'enctype="multipart/form-data"';
+		$html = '';
+
+		foreach($this->inputRepository as $input){
+			if($input instanceof Element){
+				/* @var $input Element */
+				$html .= $input->GetHTML();
+			}else{
+				$html .= $input;
+			}
 		}
 
 		$this->ClearSession();
@@ -89,7 +96,7 @@ class Form{
 
 	<form action="" method="{$this->method}" id="{$this->formName}" class="form-wrapper" {$enctype}>
 			{$message}
-			{$this->inputHTML}
+			{$html}
 
 	</form>
 
@@ -101,7 +108,7 @@ HTML;
 	 * @param bool $ignoreSession
 	 * @return array
      */
-	protected function GetMethodArray($ignoreSession = false){
+	public function GetMethodArray($ignoreSession = false){
 		$data = array();
 
 		if(isset($_SESSION[self::$SessionLocation][$this->formName]) && $ignoreSession == false){
@@ -180,17 +187,9 @@ HTML;
 
 		$this->inputRepository[$input->name] = $input;
 
-		foreach($input->compareElements as $key => $comparator){
-			if(isset($this->inputRepository[$comparator["name"]])){
-				$input->compareElements[$key]["element"] = $this->inputRepository[$comparator["name"]];
-			}else{
-				throw new \RuntimeException("Input " . $comparator["name"] . " not found and cannot be compared with " . $input->name);
-			}
-		}
 		$input->SetFormName($this->formName);
-
-		$this->inputHTML .= $input->GetHTML($this->GetMethodArray());
-
+		$input->UpdateValue($this->GetMethodArray());
+		$input->AddForm($this);
 		return $this;
 	}
 
@@ -200,9 +199,12 @@ HTML;
      */
 	public function AddFile(Element\File $input){
 		$this->has_files = true;
+
 		$this->inputRepository[$input->name] = $input;
+
 		$input->SetFormName($this->formName);
-		$this->inputHTML .= $input->GetHTML($this->GetMethodArray());
+		$input->AddForm($this);
+		$input->UpdateValue($this->GetMethodArray());
 
 		return $this;
 	}
@@ -216,7 +218,7 @@ HTML;
 			$this->saveText = $string;
 		}
 
-		$this->inputHTML .= '<button name="' . $this->getSaveButtonName() . '" value="1">' . $this->saveText . '</button>';
+		$this->inputRepository[] = '<button name="' . $this->getSaveButtonName() . '" value="1">' . $this->saveText . '</button>';
 
 		return $this;
 	}
@@ -228,7 +230,7 @@ HTML;
      */
 	public function AddCustomHTML($html){
 
-		$this->inputHTML .= PHP_EOL . $html;
+		$this->inputRepository[] = PHP_EOL . $html;
 
 		return $this;
 	}
@@ -238,8 +240,11 @@ HTML;
      */
 	public function IsValid(){
 		foreach ($this->inputRepository as $input){
-			if(!$input->IsValid()){
-				return false;
+			if($input instanceof Element){
+				/* @var $input Element */
+				if(!$input->IsValid()){
+					return false;
+				}
 			}
 		}
 
@@ -255,6 +260,9 @@ HTML;
 	public function PopulateObject($object, $sanitize = true, $ignored = array()){
 
 		foreach ($this->inputRepository as $input){
+			if($input instanceof Element){
+
+				/* @var $input Element */
 
 				if($input->IsValid()){
 
@@ -263,6 +271,8 @@ HTML;
 					}
 
 					if($input instanceof Element\File){
+						/* @var $input Element\File */
+
 						$object->{$input->name} = $input->GetFileData();
 					}else{
 						$object->{$input->name} = $input->value;
@@ -271,6 +281,7 @@ HTML;
 
 					throw new \Exception("Form/Controller::PopulateObject() - An unvalid input was discovered");
 
+				}
 			}
 		}
 	}

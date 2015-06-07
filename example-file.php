@@ -34,6 +34,7 @@ $form = (new Form\Form("FileForm", Form\Method::POST))
 <head lang="en">
     <meta charset="UTF-8">
     <title>Form Wrapper and Validator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <?php echo $form->GenerateJavaScript(); ?>

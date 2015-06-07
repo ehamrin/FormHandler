@@ -21,6 +21,8 @@ abstract class Element {
     public $required = false;
     public $showRequired = true;
     public $compareElements = array();
+    /* @var $form Form */
+    protected $form;
 
     public function __construct($name){
         $this->name = $name;
@@ -43,9 +45,14 @@ abstract class Element {
         }
 
         foreach($this->compareElements as $comparator){
+            if(!array_key_exists($comparator["name"], $this->form->inputRepository)){
+                throw new \Exception("Comparator cannot find element of name \"{$comparator["name"]}\"");
+            }
+
+            $element = $this->form->inputRepository[$comparator["name"]];
             $a = $this->value;
-            $b = $comparator["element"]->value;
-            $message = !empty($b) ? $b : $comparator["element"]->prompt;
+            $b = $element->value;
+            $message = !empty($b) ? $b : $element->prompt;
 
             switch($comparator["type"]){
                 case Comparator::GREATER_THAN:
@@ -117,8 +124,13 @@ abstract class Element {
             }
 
             if(!empty($compare)){
-                $string[] = $compare . '="' . $comparator["element"]->hashed_name . '"';
+                if(!array_key_exists($comparator["name"], $this->form->inputRepository)){
+                    throw new \Exception("Comparator cannot find element of name \"{$comparator["name"]}\"");
+                }
 
+                $element = $this->form->inputRepository[$comparator["name"]];
+
+                $string[] = $compare . '="' . $element->hashed_name . '"';
             }
 
         }
@@ -126,11 +138,13 @@ abstract class Element {
 
     }
 
-    public function Sanitize($ignored = array()){
-
-        if(property_exists($this, "type") && $this->type == \Form\Element\InputType::Password){
-            return;
+    public function UpdateValue($data){
+        if(isset($data[$this->hashed_name])){
+            $this->value = $data[$this->hashed_name];
         }
+    }
+
+    public function Sanitize($ignored = array()){
 
         if($this instanceof \Form\Element\File){
             return;
@@ -141,7 +155,7 @@ abstract class Element {
                 return;
             }
         }
-        $this->value = htmlentities(trim($this->value));
+        $this->value = htmlentities(strip_tags(trim($this->value)));
     }
 
 
@@ -170,6 +184,10 @@ abstract class Element {
         return $this;
     }
 
+    public function AddForm($form){
+        $this->form = $form;
+    }
+
     public function SetFormName($string){
         $this->formName = $string;
 
@@ -186,13 +204,12 @@ abstract class Element {
         $comparator = array();
         $comparator["type"] = $type;
         $comparator["name"] = $element;
-        $comparator["element"] = "";
 
         $this->compareElements[] = $comparator;
         return $this;
     }
 
-    public function GetHTML($data){
+    public function GetHTML(){
         return "";
     }
 
@@ -206,14 +223,13 @@ abstract class Element {
     }
 
     public function GetLabelHTML(){
-        return ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . '</label>' : '';
+        return ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . $this->GetRequiredHTML() . '</label>' : '';
     }
 
-    public function GetErrorMessageHTML($data){
+    public function GetErrorMessageHTML(){
+        if(count($this->form->GetMethodArray())) {
+            $ret = "";
 
-        $ret = "";
-
-        if (isset($data[$this->hashed_name]) || isset($data[Form::$FileLocation][$this->hashed_name])) {
             //Check validation
             $result = $this->IsValid(true);
 
@@ -226,10 +242,11 @@ abstract class Element {
                 }
 
                 $ret .= '</ul>';
-                return $ret;
+
             }
+
+            return $ret;
         }
         return null;
-
     }
 }

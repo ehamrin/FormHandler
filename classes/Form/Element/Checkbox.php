@@ -39,31 +39,26 @@ class Checkbox extends \Form\Element{
      *     HTML Generators
      *
      ****************************/
-    public function GetHTML($data)
+    public function GetHTML()
     {
-        //Was the data posted?
-        if (isset($data[$this->hashed_name])) {
-            $this->value = $data[$this->hashed_name];
-        }
-
-        $errormessage = $this->GetErrorMessageHTML($data);
+        $errormessage = $this->GetErrorMessageHTML();
         $checked = $this->value == 'on' ? 'checked="checked"' : '' ;
         $required = $this->required ? ' data-required="true"' : '';
         return <<<HTML
 
             <div class="form-group">
                 {$this->GetLabelHTML()}
-                <input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked {$required}/>{$this->GetRequiredHTML()}
+                <input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}[{$this->hashed_name}]"  $checked {$required}/>
                 {$errormessage}
             </div>
 
 HTML;
     }
 
-    public function GetErrorMessageHTML($data){
+    public function GetErrorMessageHTML(){
 
         $ret = "";
-        if(count($data)) {
+        if(count($this->form->GetMethodArray())) {
             //Check validation
             $result = $this->IsValid(true);
 
