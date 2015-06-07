@@ -38,9 +38,11 @@ nav li{
     padding: 15px 10px;
 
 }
+
 nav li a {
     text-decoration: none;
 }
+
 a{
     color: #222;
     font-family: 'Roboto', sans-serif;
@@ -108,6 +110,8 @@ p.error,p.success{
     padding: 0;
 }
 
+input:hover ~ ul,
+input:focus ~ ul,
 .form-group-error:hover{
     width: 200px;
     height: auto;
@@ -117,12 +121,14 @@ p.error,p.success{
     display: none;
     margin: 0;
     padding: 0;
-}
-
-.form-group-error:hover li{
-    display: block;
     margin-left: 30px;
     margin-bottom: 10px;
+}
+
+input:hover ~ .form-group-error li,
+input:focus ~ .form-group-error li,
+.form-group-error:hover li{
+    display: block;
 }
 
 input,
@@ -153,6 +159,8 @@ input[type="checkbox"]
 {
     width: auto;
 }
+
+
 
 .error{
     background-color: #ff9a8a;
@@ -197,4 +205,67 @@ button:hover{
 .gist .gist-it-gist{
     width: 800px;
     margin: 10px auto;
+}
+
+@media (max-width: 600px) {
+
+    body{
+        padding-bottom: 0;
+    }
+
+    nav li{
+        display: block;
+        text-align: left;
+        padding: 10px 10px;
+
+    }
+
+    form{
+        width: auto;
+        margin-top: 15px;
+
+    }
+    .form-group label, input, textarea, select,.small, .radio-group, button{
+        display: inline-block;
+        width: 90%;
+        margin: 0;
+    }
+    .form-group label{
+        text-align: left;
+        width: 80%;
+    }
+
+    .radio-group label, .radio-group input{
+        width: 25%;
+    }
+
+
+    .form-group-error,
+    input:hover ~ ul,
+    input:focus ~ ul,
+    .form-group-error:hover{
+        position: static;
+        margin: 20px;
+        height: auto;
+        width: auto;
+    }
+
+    .form-group-error li{
+        display: block;
+    }
+
+    .gist, .gist .gist-it-gist{
+        display: none;
+    }
+
+    .source-code{
+        position: static;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        text-align: right;
+        padding: 10px;
+        background: #fff;
+    }
+
 }

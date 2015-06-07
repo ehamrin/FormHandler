@@ -87,7 +87,7 @@ $form = (new Form\Form("MyForm_Swedish", Form\Method::POST))
 
 if($form->WasSubmitted() && $form->IsValid()){
 
-    echo 'Returnerad som objekt och saniterad (förrutom lösenord)';
+    echo 'Returnerad som objekt och saniterad';
     echo '<pre>';
     var_dump($form->GetDataAsObject());
     echo '</pre>';
@@ -101,6 +101,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 <head lang="en">
     <meta charset="UTF-8">
     <title>Form Wrapper and Validator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <?php echo $form->GenerateJavaScript(); ?>

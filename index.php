@@ -17,7 +17,7 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->SetPrompt("Full name")
 		->SetValue("Testnamn")
 	)
-	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "pid"))
+	->AddInput((new Form\Element\Input(Form\Element\InputType::Tel, "pid"))
 		->SetPlaceholder("YYMMDD-XXXX")
 		->SetPrompt("Personal ID (SWE)")
 		->SetRequired(true)
@@ -33,7 +33,7 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 		->SetPrompt("Info")
 		->SetMaxLength(150)
 	)
-	->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "postal"))
+	->AddInput((new Form\Element\Input(Form\Element\InputType::Tel, "postal"))
 		->SetPlaceholder("123 45")
 		->SetPrompt("Postal Code (SWE), required but hidden asterisk")
 		->SetRequired(true, true)
@@ -86,7 +86,7 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 
 if($form->WasSubmitted() && $form->IsValid()){
 
-	echo 'Returned as object and sanitized (except for password)';
+	echo 'Returned as object and sanitized';
 	echo '<pre>';
 	var_dump($form->GetDataAsObject());
 	echo '</pre>';
@@ -100,6 +100,7 @@ if($form->WasSubmitted() && $form->IsValid()){
 <head lang="en">
 	<meta charset="UTF-8">
 	<title>Form Wrapper and Validator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="style.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<?php echo $form->GenerateJavaScript(); ?>

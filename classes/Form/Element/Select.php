@@ -34,11 +34,7 @@ class Select extends \Form\Element{
         return !count($message);
     }
 
-    public function GetHTML($data){
-
-        if (isset($data[$this->hashed_name])) {
-            $this->value = $data[$this->hashed_name];
-        }
+    public function GetHTML(){
 
         $options = $this->placeholder ? '<option value="">' . $this->placeholder . '</option>' . PHP_EOL : '';
 
@@ -54,8 +50,7 @@ class Select extends \Form\Element{
                 <select id="{$this->hashed_name}" class="{$this->GetClassString()}" name="{$this->formName}[{$this->hashed_name}]" >
                         {$options}
                 </select>
-                {$this->GetRequiredHTML()}
-                {$this->GetErrorMessageHTML($data)}
+                {$this->GetErrorMessageHTML()}
             </div>
 HTML;
     }

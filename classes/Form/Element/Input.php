@@ -79,14 +79,10 @@ class Input extends \Form\Element{
 	 *     HTML Generators
 	 *
 	 ****************************/
-	public function GetHTML($data)
+	public function GetHTML()
 	{
-		//Was the data posted?
-		if (isset($data[$this->hashed_name])) {
-			$this->value = $data[$this->hashed_name];
-		}
 
-		$errormessage = $this->GetErrorMessageHTML($data);
+		$errormessage = $this->GetErrorMessageHTML();
 
 		$required = $this->required ? ' data-required="true"' : '';
 
@@ -103,7 +99,7 @@ class Input extends \Form\Element{
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" {$this->GetComparatorAsDataAttr()} class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>{$this->GetRequiredHTML()}
+				<input id="{$this->hashed_name}" {$this->GetComparatorAsDataAttr()} class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>
 				{$errormessage}
 			</div>
 HTML;

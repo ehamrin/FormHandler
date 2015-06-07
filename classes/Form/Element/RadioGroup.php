@@ -47,12 +47,8 @@ class RadioGroup extends \Form\Element{
      *     HTML Generators
      *
      ****************************/
-    public function GetHTML($data)
+    public function GetHTML()
     {
-        //Was the data posted?
-        if (isset($data[$this->hashed_name])) {
-            $this->value = $data[$this->hashed_name];
-        }
 
         $options = '';
 
@@ -61,7 +57,7 @@ class RadioGroup extends \Form\Element{
             $options .= '<label for="' . $val . $this->hashed_name . '" class="radio-label">' . $option . '</label>';
         }
 
-        $errormessage = $this->GetErrorMessageHTML($data);
+        $errormessage = $this->GetErrorMessageHTML();
 
         return <<<HTML
 
@@ -70,16 +66,15 @@ class RadioGroup extends \Form\Element{
                 <div class="radio-group">
                     {$options}
                 </div>
-                {$this->GetRequiredHTML()}
                 {$errormessage}
             </div>
 HTML;
     }
 
-    public function GetErrorMessageHTML($data){
+    public function GetErrorMessageHTML(){
 
         $ret = "";
-        if(count($data)) {
+        if(count($this->form->GetMethodArray())) {
             //Check validation
             $result = $this->IsValid(true);
 

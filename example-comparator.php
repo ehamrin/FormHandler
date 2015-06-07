@@ -16,10 +16,11 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
         ->SetPlaceholder("YYYY-MM-DD")
         ->SetPrompt("Start date")
         ->SetValidator(\Form\Validator::DATE)
+        ->SetComparator(\Form\Comparator::LESS_THAN, 'second_date')
     )
     ->AddInput((new Form\Element\Input(Form\Element\InputType::Date, "second_date"))
         ->SetPlaceholder("YYYY-MM-DD")
-        ->SetPrompt("End date(greater than Start Date)")
+        ->SetPrompt("End date")
         ->SetValidator(\Form\Validator::DATE)
         ->SetComparator(\Form\Comparator::GREATER_THAN, "first_date")
     )
@@ -42,6 +43,7 @@ $form2 = (new Form\Form("MyForm2", Form\Method::POST))
         ->SetPlaceholder("Number 1")
         ->SetPrompt("Start number")
         ->SetValidator(\Form\Validator::FLOAT)
+        ->SetComparator(\Form\Comparator::LESS_THAN, 'second_num')
     )
     ->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "second_num"))
         ->SetPlaceholder("Number 2")
@@ -66,6 +68,7 @@ if($form2->WasSubmitted() && $form2->IsValid()){
 <head lang="en">
     <meta charset="UTF-8">
     <title>Form Wrapper and Validator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <?php echo $form->GenerateJavaScript(); ?>
