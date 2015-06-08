@@ -221,10 +221,24 @@ button:hover{
 }
 
 .inline-1-3 input[type=date]{
-    width: 100%;
+    width: 80%;
 }
 .inline-1-3 label{
     width: 60%;
+}
+.inline-1-3 input:hover ~ ul,
+.inline-1-3 input:focus ~ ul,
+.inline-1-3 .form-group-error:hover{
+    z-index: 2;
+}
+.inline-1-3 .form-group-error {
+    left: 82%;
+    background-color: #fff;
+
+}
+
+.inline-1-3 .form-group-error li {
+    background-color: #fff;
 }
 
 @media (max-width: 600px) {

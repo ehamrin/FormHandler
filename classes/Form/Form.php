@@ -347,6 +347,7 @@ HTML;
 		return <<<JS
 
 	<script type="text/javascript">
+
 	$(document).ready(function(){
 
 		var Messages = {$errormessages};
@@ -452,6 +453,36 @@ HTML;
 			var errors = "";
 			element.parent().find(".form-group-error").remove();
 
+			if(element[0].type == "file"){
+				var size = element[0].files[0].size;
+				var type = element[0].files[0].type;
+
+				if(element.data('mime')){
+					var arr = element.data('mime').split(';');
+					var outcome = false;
+					var message = [];
+
+					for(var i = 0; i < arr.length; i++){
+						if(arr[i] == type){
+							outcome = true;
+						}
+
+						message.push('"' + arr[i].split('/')[1] + '"');
+					}
+
+					if(outcome == false){
+						errors += GenerateErrorString(Messages["File_Unvalid_Format"].replace('{0}', message.join(' or, ')));
+
+					}
+				}
+
+				if(element.data('maxSize') &&  ((size/1024)/1024) > element.data('maxSize')){
+					errors += GenerateErrorString(Messages["File_Too_Large"].replace('{0}', element.data('maxSize')));
+
+				}
+
+			}
+
 			if(element.data("required") || element.val() != ""){
 
 				if(element.val() == ""  || (element.attr("type") == "checkbox" && !element.is(':checked') && element.data("required"))){
@@ -495,7 +526,7 @@ HTML;
 			if(validateForm(this, true) == false){
 				e.preventDefault();
 			}
-		})
+		});
 
 	});
 	</script>

@@ -87,12 +87,14 @@ class File extends \Form\Element{
 
         $errormessage = $this->GetErrorMessageHTML();
         $required = $this->required ? ' data-required="true"' : '';
+        $maxSize = $this->maxSize ? 'data-max-size="' . $this->maxSize . '"' : '';
+        $validMime = count($this->validMime) ? 'data-mime="' . implode(';', $this->validMime) . '"' : '';
 
         return <<<HTML
 
 			<div class="form-group  {$this->GetGroupClass()}">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="file" name="{$this->hashed_name}" {$required}/>
+				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" {$maxSize} {$validMime} type="file" name="{$this->hashed_name}" {$required}/>
 				{$errormessage}
 			</div>
 HTML;
