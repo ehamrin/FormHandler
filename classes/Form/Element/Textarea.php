@@ -56,7 +56,7 @@ class Textarea extends \Form\Element{
 
         return <<<HTML
 
-			<div class="form-group">
+			<div class="form-group {$this->GetGroupClass()}">
 				{$this->GetLabelHTML()}
 				<textarea id="{$this->hashed_name}" class="{$this->GetClassString()}" maxlength="{$this->maxLength}" placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]">{$this->value}</textarea>
 				{$errormessage}

@@ -45,7 +45,7 @@ class Select extends \Form\Element{
 
         return <<<HTML
 
-            <div class="form-group form-select">
+            <div class="form-group form-select {$this->GetGroupClass()}">
                 {$this->GetLabelHTML()}
                 <select id="{$this->hashed_name}" class="{$this->GetClassString()}" name="{$this->formName}[{$this->hashed_name}]" >
                         {$options}

@@ -41,16 +41,7 @@ $form = (new Form\Form("FileForm", Form\Method::POST))
 </head>
 <body>
 
-<?php
-if($form->wasSubmitted() && $form->isValid()){
-    $obj = $form->GetDataAsObject();
-    echo '<pre>';
-    echo 'Image (returned as base64-encoded string): <img src="data: ' . $obj->fileUpload->type . ';base64,' . $obj->fileUpload->data . '" width="150px" alt="' . $obj->fileUpload->name . '"/>' . PHP_EOL;
-    $obj->fileUpload->data = substr($obj->fileUpload->data, 0, 75). "...(cut-off at 75 characters for preview of data)";
-    var_dump($obj);
-    echo '</pre>';
-}
-?>
+
 
     <h1>Upload form</h1>
     <nav>
@@ -59,7 +50,23 @@ if($form->wasSubmitted() && $form->isValid()){
         <li><a href="example-login.php">Login form example</a></li>
         <li><a href="example-file.php">File upload example</a></li>
         <li><a href="example-comparator.php">Field comparator example</a></li>
+        <li><a href="example-array.php">Array example</a></li>
     </nav>
+
+<?php
+    if($form->wasSubmitted() && $form->isValid()):
+        $obj = $form->GetDataAsObject();
+?>
+    <div class="result">
+        <pre>
+            Image (returned as base64-encoded string): <img src="data: <?php echo $obj->fileUpload->type; ?>;base64,<?php echo $obj->fileUpload->data; ?>" width="150px" alt="<?php echo $obj->fileUpload->name; ?>"/>
+<?php
+            $obj->fileUpload->data = substr($obj->fileUpload->data, 0, 75). "...(cut-off at 75 characters for preview of data)";
+            var_dump($obj);
+?>
+        </pre>
+    </div>
+<?php endif; ?>
 
     <?php echo $form->GenerateOutput(); ?>
 

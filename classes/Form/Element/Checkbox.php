@@ -11,6 +11,8 @@ namespace Form\Element;
 
 class Checkbox extends \Form\Element{
 
+    private $positionRight = false;
+
     public function IsValid($errorMessage = false){
         $messages = array();
 
@@ -42,13 +44,17 @@ class Checkbox extends \Form\Element{
     public function GetHTML()
     {
         $errormessage = $this->GetErrorMessageHTML();
-        $checked = $this->value === 'on' ? 'checked="checked"' : '' ;
+        $checked = $this->value == 'on' ? 'checked="checked"' : '' ;
         $required = $this->required ? ' data-required="true"' : '';
+
+        $labelLeft = $this->positionRight ? '': $this->GetLabelHTML();
+        $labelRight = $this->positionRight ? $this->GetLabelHTML("right-side") : '' ;
         return <<<HTML
 
-            <div class="form-group">
-                {$this->GetLabelHTML()}
+            <div class="form-group  {$this->GetGroupClass()}">
+                {$labelLeft}
                 <input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="checkbox" name="{$this->formName}{$this->GetArrayPadding()}[{$this->hashed_name}]"  $checked {$required}/>
+                {$labelRight}
                 {$errormessage}
             </div>
 
@@ -77,6 +83,12 @@ HTML;
         }
         return null;
 
+    }
+
+    public function SetLabelPositionRight($bool = true){
+        $this->positionRight = $bool;
+
+        return $this;
     }
 
 }

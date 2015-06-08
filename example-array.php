@@ -16,24 +16,46 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
         ->SetPrompt("Date")
     );
 
-for($i = 1; $i < 5; $i++){
-    $form->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "name"))
+for($i = 1; $i <= 3; $i++){
+    $form->AddCustomHTML('<fieldset><legend>Employee ' . $i . '</legend>')
+        ->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "name"))
             ->SetPlaceholder("Name")
             ->SetPrompt("Name")
             ->AddToArray('Employee', $i)
         )
-        ->AddInput((new Form\Element\Checkbox("level1"))
-            ->SetPrompt("Level 1")
-            ->AddToArray('Employee', $i, 'SecurityAccess')
+        ->AddInput((new Form\Element\Input(Form\Element\InputType::Tel, "age"))
+            ->SetPlaceholder("18+")
+            ->SetPrompt("Age")
+            ->SetValidator(\Form\Validator::INT)
+            ->SetRange(18, 99)
+            ->AddToArray('Employee', $i)
         )
-        ->AddInput((new Form\Element\Checkbox("level2"))
-            ->SetPrompt("Level 2")
-            ->AddToArray('Employee', $i, 'SecurityAccess')
+        ->AddCustomHTML('<fieldset><legend>Security access</legend>');
+    for($j = 1; $j <= 3; $j++) {
+        $form->AddInput((new Form\Element\Checkbox("enabled"))
+            ->SetPrompt("Level " . $j)
+            ->SetLabelPositionRight(true)
+            ->SetGroupClass("inline-1-3")
+            ->AddToArray('Employee', $i, 'SecurityAccess', $j)
         )
-        ->AddInput((new Form\Element\Checkbox("level3"))
-            ->SetPrompt("Level 3")
-            ->AddToArray('Employee', $i, 'SecurityAccess')
+        ->AddInput((new Form\Element\Input(Form\Element\InputType::Date, "start"))
+            ->SetPlaceholder("Start date")
+            ->SetValidator(\Form\Validator::DATE)
+            ->SetGroupClass("inline-1-3")
+            ->AddToArray('Employee', $i, 'SecurityAccess', $j)
+        )
+        ->AddInput((new Form\Element\Input(Form\Element\InputType::Date, "end"))
+            ->SetPlaceholder("End date")
+            ->SetValidator(\Form\Validator::DATE)
+            ->SetComparator(\Form\Comparator::GREATER_THAN, "start")
+            ->SetGroupClass("inline-1-3")
+            ->AddToArray('Employee', $i, 'SecurityAccess', $j)
         );
+
+    }
+
+    $form->AddCustomHTML('</fieldset>')
+        ->AddCustomHTML('</fieldset>');
 }
 
     $form->AddSubmit();
@@ -52,15 +74,6 @@ for($i = 1; $i < 5; $i++){
 </head>
 <body>
 
-<?php
-if($form->WasSubmitted() && $form->IsValid()){
-
-    echo '<pre>';
-    var_dump($form->GetDataAsObject());
-    echo '</pre>';
-
-}
-?>
 <h1>Comparators</h1>
 <nav>
     <li><a href="index.php">Default</a></li>
@@ -70,6 +83,14 @@ if($form->WasSubmitted() && $form->IsValid()){
     <li><a href="example-comparator.php">Field comparator example</a></li>
     <li><a href="example-array.php">Array example</a></li>
 </nav>
+
+<?php if($form->WasSubmitted() && $form->IsValid()): ?>
+    <div class="result"><!--
+		--><pre><!--
+			--><?php var_dump($form->GetDataAsObject()); ?><!--
+		--></pre><!--
+	--></div>
+<?php endif; ?>
 
 <?php
 echo $form->GenerateOutput();

@@ -17,14 +17,6 @@ $form = (new Form\Form("SignInForm", Form\Method::POST))
     )
     ->AddSubmit("Sign in");
 
-if($form->wasSubmitted() && $form->isValid()){
-    //This would be were you set you session data and redirect the user
-    echo '<pre>';
-    var_dump($form->GetDataAsObject());
-    echo '</pre>';
-
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -45,8 +37,16 @@ if($form->wasSubmitted() && $form->isValid()){
         <li><a href="example-login.php">Login form example</a></li>
         <li><a href="example-file.php">File upload example</a></li>
         <li><a href="example-comparator.php">Field comparator example</a></li>
+        <li><a href="example-array.php">Array example</a></li>
     </nav>
 
+<?php if($form->WasSubmitted() && $form->IsValid()): ?>
+    <div class="result"><!--
+		--><pre><!--
+			--><?php var_dump($form->GetDataAsObject()); ?><!--
+		--></pre><!--
+	--></div>
+<?php endif; ?>
 
     <?php echo $form->GenerateOutput(); ?>
 

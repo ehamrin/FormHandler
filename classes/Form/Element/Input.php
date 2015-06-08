@@ -97,7 +97,7 @@ class Input extends \Form\Element{
 		$validators .= $this->GetComparatorAsDataAttr();
 		return <<<HTML
 
-			<div class="form-group">
+			<div class="form-group {$this->GetGroupClass()}">
 				{$this->GetLabelHTML()}
 				<input id="{$this->hashed_name}" {$this->GetComparatorAsDataAttr()} class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}{$this->GetArrayPadding()}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>
 				{$errormessage}

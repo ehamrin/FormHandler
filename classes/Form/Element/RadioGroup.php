@@ -61,7 +61,7 @@ class RadioGroup extends \Form\Element{
 
         return <<<HTML
 
-            <div class="form-group">
+            <div class="form-group  {$this->GetGroupClass()}">
                 {$this->GetLabelHTML()}
                 <div class="radio-group">
                     {$options}

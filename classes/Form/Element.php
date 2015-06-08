@@ -19,6 +19,7 @@ abstract class Element {
     public $value = "";
     public $validator = array();
     public $class = array();
+    private $groupClass = array();
     protected $formName = "";
     public $required = false;
     public $showRequired = true;
@@ -43,7 +44,7 @@ abstract class Element {
     public function ValidateComparators(){
         $errorMessage = array();
 
-        if(!count($this->compareElements)){
+        if(!count($this->compareElements) || !$this->required && $this->value == ""){
             return $errorMessage;
         }
 
@@ -251,6 +252,16 @@ abstract class Element {
         return "";
     }
 
+    public function SetGroupClass($class){
+        $this->groupClass[] = $class;
+
+        return $this;
+    }
+
+    public function GetGroupClass(){
+        return implode(' ', $this->groupClass);
+    }
+
     public function GetClassString(){
         return implode(' ', $this->class);
     }
@@ -260,8 +271,8 @@ abstract class Element {
 
     }
 
-    public function GetLabelHTML(){
-        return ($this->prompt != "") ? '<label for="' . $this->hashed_name . '">' . $this->prompt . $this->GetRequiredHTML() . '</label>' : '';
+    public function GetLabelHTML($cssClass = "left-side"){
+        return ($this->prompt != "") ? '<label class="' . $cssClass . '" for="' . $this->hashed_name . '">' . $this->prompt . $this->GetRequiredHTML() . '</label>' : '';
     }
 
     public function GetErrorMessageHTML(){

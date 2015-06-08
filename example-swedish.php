@@ -115,8 +115,16 @@ if($form->WasSubmitted() && $form->IsValid()){
         <li><a href="example-login.php">Login form example</a></li>
         <li><a href="example-file.php">File upload example</a></li>
         <li><a href="example-comparator.php">Field comparator example</a></li>
+        <li><a href="example-array.php">Array example</a></li>
     </nav>
 
+<?php if($form->WasSubmitted() && $form->IsValid()): ?>
+    <div class="result"><!--
+		--><pre><!--
+			--><?php var_dump($form->GetDataAsObject()); ?><!--
+		--></pre><!--
+	--></div>
+<?php endif; ?>
 
     <?php echo $form->GenerateOutput(); ?>
 

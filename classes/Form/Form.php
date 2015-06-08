@@ -401,7 +401,6 @@ HTML;
 				}
 			};
 
-
 			if(element.data("greater-than")){
 				setComparatorValues($('#' + element.data("greater-than")));
 
@@ -442,6 +441,7 @@ HTML;
 				}
 			}
 
+
 			return errors;
 		};
 
@@ -471,10 +471,11 @@ HTML;
 					});
 				}
 
+				errors += validateComparator(element);
 
 			}
 
-			errors += validateComparator(element);
+
 
 			if(errors != ""){
 				element.parent().append('<ul class="form-group-error">' + errors + '</ul>');

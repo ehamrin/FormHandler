@@ -90,7 +90,7 @@ class File extends \Form\Element{
 
         return <<<HTML
 
-			<div class="form-group">
+			<div class="form-group  {$this->GetGroupClass()}">
 				{$this->GetLabelHTML()}
 				<input id="{$this->hashed_name}" class="{$this->GetClassString()}" type="file" name="{$this->hashed_name}" {$required}/>
 				{$errormessage}

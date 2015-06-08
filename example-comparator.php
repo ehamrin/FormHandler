@@ -27,40 +27,6 @@ $form = (new Form\Form("MyForm", Form\Method::POST))
 
     ->AddSubmit("Compare");
 
-if($form->WasSubmitted() && $form->IsValid()){
-
-    echo '<pre>';
-    var_dump($form->GetDataAsObject());
-    echo '</pre>';
-
-}
-
-$form2 = (new Form\Form("MyForm2", Form\Method::POST))
-    ->SetSuccessMessage("You successfully submitted the form")
-    ->SetErrorMessage("You submitted the form, but there were errors validating.")
-
-    ->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "first_num"))
-        ->SetPlaceholder("Number 1")
-        ->SetPrompt("Start number")
-        ->SetValidator(\Form\Validator::FLOAT)
-        ->SetComparator(\Form\Comparator::LESS_THAN, 'second_num')
-    )
-    ->AddInput((new Form\Element\Input(Form\Element\InputType::Text, "second_num"))
-        ->SetPlaceholder("Number 2")
-        ->SetPrompt("End number(greater than Start number)")
-        ->SetValidator(\Form\Validator::FLOAT)
-        ->SetComparator(\Form\Comparator::GREATER_THAN, "first_num")
-    )
-    ->AddSubmit("Compare");
-
-if($form2->WasSubmitted() && $form2->IsValid()){
-
-    echo '<pre>';
-    var_dump($form2->GetDataAsObject());
-    echo '</pre>';
-
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -82,11 +48,20 @@ if($form2->WasSubmitted() && $form2->IsValid()){
         <li><a href="example-login.php">Login form example</a></li>
         <li><a href="example-file.php">File upload example</a></li>
         <li><a href="example-comparator.php">Field comparator example</a></li>
+        <li><a href="example-array.php">Array example</a></li>
     </nav>
+
+<?php if($form->WasSubmitted() && $form->IsValid()): ?>
+    <div class="result"><!--
+		--><pre><!--
+			--><?php var_dump($form->GetDataAsObject()); ?><!--
+		--></pre><!--
+	--></div>
+<?php endif; ?>
+
 
 <?php
         echo $form->GenerateOutput();
-        echo $form2->GenerateOutput();
 ?>
 
     <div class="gist">
