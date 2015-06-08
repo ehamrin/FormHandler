@@ -185,7 +185,7 @@ HTML;
      */
 	public function AddInput(Element $input){
 
-		$this->inputRepository[$input->name] = $input;
+		$this->inputRepository[implode('', $input->inArray) . $input->name] = $input;
 
 		$input->SetFormName($this->formName);
 		$input->UpdateValue($this->GetMethodArray());
@@ -251,6 +251,24 @@ HTML;
 		return true;
 	}
 
+	public function array_merge_recursive_new() {
+
+		$arrays = func_get_args();
+		$base = array_shift($arrays);
+
+		foreach ($arrays as $array) {
+			reset($base); //important
+			while (list($key, $value) = @each($array)) {
+				if (is_array($value) && @is_array($base[$key])) {
+					$base[$key] = $this->array_merge_recursive_new($base[$key], $value);
+				} else {
+					$base[$key] = $value;
+				}
+			}
+		}
+
+		return $base;
+	}
 	/**
 	 * @param $object
 	 * @param bool $sanitize
@@ -259,25 +277,41 @@ HTML;
      */
 	public function PopulateObject($object, $sanitize = true, $ignored = array()){
 
-		foreach ($this->inputRepository as $input){
-			if($input instanceof Element){
+		foreach ($this->inputRepository as $input) {
+			if ($input instanceof Element) {
 
 				/* @var $input Element */
 
-				if($input->IsValid()){
+				if ($input->IsValid()) {
 
-					if($sanitize){
+					if ($sanitize) {
 						$input->Sanitize($ignored);
 					}
 
-					if($input instanceof Element\File){
+					if ($input instanceof Element\File) {
 						/* @var $input Element\File */
 
 						$object->{$input->name} = $input->GetFileData();
-					}else{
-						$object->{$input->name} = $input->value;
+					} else {
+						if(count($input->inArray)) {
+							$base = $input->inArray[0];
+							if (!property_exists($object, $base)) {
+								$object->{$base} = array();
+							}
+
+							if(count($input->inArray) > 1){
+								//var_dump($input->GetLocationAsArray());
+								$object->{$base} = $this->array_merge_recursive_new($object->{$base}, $input->GetLocationAsArray());
+							}else{
+								$object->{$base}[$input->name] = $input->value;
+							}
+
+
+						}else{
+							$object->{$input->name} = $input->value;
+						}
 					}
-				}else{
+				}else {
 
 					throw new \Exception("Form/Controller::PopulateObject() - An unvalid input was discovered");
 
@@ -285,6 +319,7 @@ HTML;
 			}
 		}
 	}
+
 
 	/**
 	 * @param bool $sanitize
@@ -419,7 +454,7 @@ HTML;
 
 			if(element.data("required") || element.val() != ""){
 
-				if(element.val() == ""  || element.attr("type") == "checkbox" && !element.is(':checked')){
+				if(element.val() == ""  || (element.attr("type") == "checkbox" && !element.is(':checked') && element.data("required"))){
 					errors += GenerateErrorString(Messages["Field_Empty"]);
 				}
 

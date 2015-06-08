@@ -99,7 +99,7 @@ class Input extends \Form\Element{
 
 			<div class="form-group">
 				{$this->GetLabelHTML()}
-				<input id="{$this->hashed_name}" {$this->GetComparatorAsDataAttr()} class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>
+				<input id="{$this->hashed_name}" {$this->GetComparatorAsDataAttr()} class="{$this->GetClassString()}" type="{$this->type}" maxlength="{$this->maxLength}"  placeholder="{$this->placeholder}"  name="{$this->formName}{$this->GetArrayPadding()}[{$this->hashed_name}]"  value="{$this->value}" {$required} {$validators}/>
 				{$errormessage}
 			</div>
 HTML;

@@ -9,6 +9,8 @@
 namespace Form;
 
 
+use Form\Element\Checkbox;
+
 abstract class Element {
 
     public $name;
@@ -21,6 +23,7 @@ abstract class Element {
     public $required = false;
     public $showRequired = true;
     public $compareElements = array();
+    public $inArray = array();
     /* @var $form Form */
     protected $form;
 
@@ -45,11 +48,11 @@ abstract class Element {
         }
 
         foreach($this->compareElements as $comparator){
-            if(!array_key_exists($comparator["name"], $this->form->inputRepository)){
+            if(!array_key_exists(implode('', $this->inArray) . $comparator["name"], $this->form->inputRepository)){
                 throw new \Exception("Comparator cannot find element of name \"{$comparator["name"]}\"");
             }
 
-            $element = $this->form->inputRepository[$comparator["name"]];
+            $element = $this->form->inputRepository[implode('', $this->inArray) . $comparator["name"]];
             $a = $this->value;
             $b = $element->value;
             $message = !empty($b) ? $b : $element->prompt;
@@ -124,11 +127,11 @@ abstract class Element {
             }
 
             if(!empty($compare)){
-                if(!array_key_exists($comparator["name"], $this->form->inputRepository)){
+                if(!array_key_exists(implode('', $this->inArray) . $comparator["name"], $this->form->inputRepository)){
                     throw new \Exception("Comparator cannot find element of name \"{$comparator["name"]}\"");
                 }
 
-                $element = $this->form->inputRepository[$comparator["name"]];
+                $element = $this->form->inputRepository[implode('', $this->inArray) . $comparator["name"]];
 
                 $string[] = $compare . '="' . $element->hashed_name . '"';
             }
@@ -138,10 +141,45 @@ abstract class Element {
 
     }
 
+    public function AddToArray(){
+        if(func_num_args()){
+            $this->inArray = func_get_args();
+            return $this;
+        }else {
+            throw new \BadMethodCallException("You need to specify at least one parameter");
+        }
+    }
+
+    public function GetLocationAsArray(){
+        $ret = array($this->name => $this->value);
+        for($i = count($this->inArray)-1; $i > 0; $i--){
+            $ret = array($this->inArray[$i] => $ret);
+        }
+        return $ret;
+    }
+
+    public function GetArrayPadding(){
+        $ret = '';
+        foreach($this->inArray as $array){
+            $ret .= '[' . $array . ']';
+        }
+
+        return $ret;
+    }
+
     public function UpdateValue($data){
+        if(count($this->inArray)){
+            foreach($this->inArray as $array){
+                if(isset($data[$array])){
+                    $data = $data[$array];
+                }
+            }
+        }
+
         if(isset($data[$this->hashed_name])){
             $this->value = $data[$this->hashed_name];
         }
+
     }
 
     public function Sanitize($ignored = array()){
@@ -191,7 +229,7 @@ abstract class Element {
     public function SetFormName($string){
         $this->formName = $string;
 
-        $this->hashed_name = 'a' . hash('sha256', \Form\Form::SALT . hash('sha256', $this->formName . '_' . $this->name));
+        $this->hashed_name = 'a' . hash('sha256', \Form\Form::SALT . hash('sha256', $this->formName . '_' . implode('_', $this->inArray) . $this->name));
     }
 
     public function SetValidator($regex){
